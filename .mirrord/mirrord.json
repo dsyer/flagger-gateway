@@ -1,0 +1,13 @@
+{
+    "feature": {
+        "network": {
+            "incoming": "steal",
+            "outgoing": true
+        },
+        "fs": "read",
+        "env": true
+    },
+    "agent": {
+        "startup_timeout": 200
+    }
+}
