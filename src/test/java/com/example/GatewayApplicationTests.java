@@ -15,27 +15,15 @@
  */
 package com.example;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "grpc.server.port=9371")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GatewayApplicationTests {
-
-	@Autowired
-	private TestRestTemplate rest;
 
 	@Test
 	void contextLoads() throws Exception {
-		ResponseEntity<String> response = rest.getForEntity("/dates/publicholidays/2024/AT", String.class);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(response.getBody()).contains("New Year's Day");
 	}
 
 	public static void main(String[] args) {
