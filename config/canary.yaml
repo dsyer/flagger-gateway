@@ -1,0 +1,27 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: podinfo
+spec:
+  provider: kubernetes
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: podinfo
+  service:
+    port: 9898
+    targetPort: 9898
+    portDiscovery: true
+  analysis:
+    interval: 30s
+    threshold: 5
+    iterations: 10
+    metrics:
+    - name: request-success-rate
+      thresholdRange:
+        min: 90
+      interval: 1m
+    - name: request-duration
+      thresholdRange:
+        max: 5000
+      interval: 30s

@@ -1,46 +1,76 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: podinfo
   labels:
-    app: app
-  name: app
+    app: podinfo
 spec:
-  replicas: 1
+  minReadySeconds: 5
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 60
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
   selector:
     matchLabels:
-      app: app
+      app: podinfo
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9797"
       labels:
-        app: app
+        app: podinfo
     spec:
       containers:
-      - name: app
-        image: registry.k8s.io/e2e-test-images/agnhost:2.45
-        args:
-        - netexec
+      - name: podinfod
+        image: ghcr.io/stefanprodan/podinfo:6.0.0
+        imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8080
-          name: http
+        - name: http
+          containerPort: 9898
+          protocol: TCP
+        - name: http-metrics
+          containerPort: 9797
+          protocol: TCP
+        - name: grpc
+          containerPort: 9999
+          protocol: TCP
+        command:
+        - ./podinfo
+        - --port=9898
+        - --port-metrics=9797
+        - --grpc-port=9999
+        - --grpc-service-name=podinfo
+        - --level=info
+        - --random-delay=false
+        - --random-error=false
+        env:
+        - name: PODINFO_UI_COLOR
+          value: "#34577c"
         livenessProbe:
-          httpGet:
-            path: /
-            port: http
+          exec:
+            command:
+            - podcli
+            - check
+            - http
+            - localhost:9898/healthz
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
         readinessProbe:
-          httpGet:
-            path: /
-            port: http
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: app
-spec:
-  selector:
-    app: app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
+          exec:
+            command:
+            - podcli
+            - check
+            - http
+            - localhost:9898/readyz
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi

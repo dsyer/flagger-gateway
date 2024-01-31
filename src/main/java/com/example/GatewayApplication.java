@@ -27,7 +27,8 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class GatewayApplication {
 
-	private String app = "http://app";
+	private String app = "http://podinfo:9898";
+	private String canary = "http://podinfo-canary:9898";
 
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
@@ -36,10 +37,10 @@ public class GatewayApplication {
 	@Bean
 	RouteLocator gateway(RouteLocatorBuilder rlb) {
 		return rlb.routes()
-				.route(r -> r.weight("app", 8).and().path("/app/**")
-						.filters(f -> f.stripPrefix(1).addResponseHeader("X-App", "High")).uri(app))
-				.route(r -> r.weight("app", 2).and().path("/app/**")
-						.filters(f -> f.stripPrefix(1).addResponseHeader("X-App", "Low")).uri(app))
+				.route(r -> r.path("/podinfo/**")
+						.filters(f -> f.stripPrefix(1)).uri(app))
+				.route(r -> r.path("/canary/**")
+						.filters(f -> f.stripPrefix(1)).uri(canary))
 				.build();
 	}
 
