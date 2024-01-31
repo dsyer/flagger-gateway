@@ -101,7 +101,7 @@ NAME      STATUS      WEIGHT   LASTTRANSITIONTIME
 podinfo   Succeeded   0        2024-01-31T08:21:47Z
 ```
 
-When it succeeds, the route weights will be moved to 100 on the canary. We used the `iterations` config property in the canary to set the analysis up, so the weights in the route will only ever be 100 or 0. It's a "blue-green" deployment:
+When it succeeds, the route weights will momentarily be 90-10 because the `maxWeight` (on the canary) is set to 10:
 
 ```
 $ kubectl get httproutes.gateway.networking.k8s.io -o yaml
@@ -112,12 +112,12 @@ $ kubectl get httproutes.gateway.networking.k8s.io -o yaml
         kind: Service
         name: podinfo-primary
         port: 9898
-        weight: 0
+        weight: 90
       - group: ""
         kind: Service
         name: podinfo-canary
         port: 9898
-        weight: 100
+        weight: 10
 ```
 
 After a short(?) time the canary will then be moved into the primary deployment and the weights swapped back over:
