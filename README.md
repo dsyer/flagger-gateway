@@ -101,7 +101,7 @@ NAME      STATUS      WEIGHT   LASTTRANSITIONTIME
 podinfo   Succeeded   0        2024-01-31T08:21:47Z
 ```
 
-When it succeeds, the route weights will be moved to 100 on the canary:
+When it succeeds, the route weights will be moved to 100 on the canary. We used the `iterations` config property in the canary to set the analysis up, so the weights in the route will only ever be 100 or 0. It's a "blue-green" deployment:
 
 ```
 $ kubectl get httproutes.gateway.networking.k8s.io -o yaml
