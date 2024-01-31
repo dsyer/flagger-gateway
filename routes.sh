@@ -13,6 +13,7 @@ function update() {
 }
 
 while curl -s -X POST localhost:8080/actuator/gateway/refresh; do
+	date
 	. <(curl -s localhost:8080/actuator/gateway/routes | jq -r '.[] | "curl -s -X DELETE localhost:8080/actuator/gateway/routes/\(.route_id)"')
 	. <(kubectl get httproutes.gateway.networking.k8s.io podinfo \
 		-o jsonpath='{.spec.rules[0].backendRefs}' | jq -r '.[] | "name=\(.name); weight=\(.weight); update $name $weight"')

@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class GatewayApplication {
 
-	private String app = "http://podinfo-primary:9898";
+	private String app = "http://podinfo:9898";
 
 	private String canary = "http://podinfo-canary:9898";
 
