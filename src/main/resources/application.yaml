@@ -1,9 +1,14 @@
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
   endpoint:
+    gateway:
+      enabled: true
     health:
       show-details: always
       probes:
@@ -17,3 +22,9 @@ management:
         enabled: true
       os:
         enabled: true
+spring:
+  cloud:
+    gateway:
+      actuator:
+        verbose:
+          enabled: true

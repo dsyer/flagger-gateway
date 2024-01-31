@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class GatewayApplication {
 
-	private String app = "http://podinfo:9898";
+	private String app = "http://podinfo-primary:9898";
 	private String canary = "http://podinfo-canary:9898";
 
 	public static void main(String[] args) {
@@ -37,7 +37,7 @@ public class GatewayApplication {
 	@Bean
 	RouteLocator gateway(RouteLocatorBuilder rlb) {
 		return rlb.routes()
-				.route(r -> r.path("/podinfo/**")
+				.route(r -> r.path("/app/**")
 						.filters(f -> f.stripPrefix(1)).uri(app))
 				.route(r -> r.path("/canary/**")
 						.filters(f -> f.stripPrefix(1)).uri(canary))

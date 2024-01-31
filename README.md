@@ -154,7 +154,7 @@ Test that the gateway is working:
 $ kubectl port-forward services/gateway 8080:80
 Forwarding from 127.0.0.1:8080 -> 8080
 Forwarding from [::1]:8080 -> 8080
-$ curl localhost:8080/podinfo/
+$ curl localhost:8080/app/
 {
   "hostname": "podinfo-5d5dbc4d84-mwmxm",
   "version": "6.0.1",
@@ -171,3 +171,24 @@ $ curl localhost:8080/podinfo/
 ```
 
 The gateway also has a `/canary` endpoint that will return the canary version of podinfo, so you can use that to promote a new version the same way we did with the `podinfo-canary` port forward above.
+
+## Dynamic Weights
+
+Flagger sets up new weights and backends in the `HTTPRoute` object. We can read those and push them into the gateway using the `resource.sh` script:
+
+```
+$ ./resource.sh
+Updated podinfo-primary to 100
+Updated podinfo-canary to 0
+
+Updated podinfo-primary to 100
+Updated podinfo-canary to 0
+...
+```
+
+It's an infinite loop updating the gateway every 5 seconds. You can see the weights changing if you trigger the canary and apply some load to the `/podinfo` path:
+
+```
+$ kubectl set image deployment/podinfo podinfod=ghcr.io/stefanprodan/podinfo:6.0.0
+$ ab -c 2 -n 30000 http://localhost:8080/app/podinfo
+```
