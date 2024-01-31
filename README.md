@@ -32,9 +32,16 @@ $ curl localhost:9898
 }
 ```
 
+## Install HTTPRoute Resource
+
+```
+$ kubectl apply -f config/httproute.yaml
+```
+
 ## Blue-Green Deployment
 
 ```
+$ kubectl apply -f config/route.yaml
 $ kubectl apply -f config/canary.yaml
 ```
 
@@ -44,6 +51,25 @@ wait for the canary to have a status of `Initialized`:
 $ kubectl get canary
 NAME     STATUS        WEIGHT   LASTTRANSITIONTIME
 podinfo  Initialized   0        2021-10-13T15:47:00Z
+```
+
+The http route will now have two backends, one for the primary and one for the canary:
+
+```
+$ kubectl get httproutes.gateway.networking.k8s.io -o yaml
+...
+    rules:
+    - backendRefs:
+      - group: ""
+        kind: Service
+        name: podinfo-primary
+        port: 9898
+        weight: 100
+      - group: ""
+        kind: Service
+        name: podinfo-canary
+        port: 9898
+        weight
 ```
 
 Update the image:
@@ -75,23 +101,42 @@ NAME      STATUS      WEIGHT   LASTTRANSITIONTIME
 podinfo   Succeeded   0        2024-01-31T08:21:47Z
 ```
 
-When it succeeds, it will be promoted to primary, and the canary service will stop responding on port 9898. The primary service will start responding on port 9898 and show the current version:
+When it succeeds, the route weights will be moved to 100 on the canary:
 
 ```
-$ kubectl port-forward services/podinfo 9898:9898
-{
-  "hostname": "podinfo-primary-5b5c685949-scqdd",
-  "version": "6.0.1",
-  "revision": "",
-  "color": "#34577c",
-  "logo": "https://raw.githubusercontent.com/stefanprodan/podinfo/gh-pages/cuddle_clap.gif",
-  "message": "greetings from podinfo v6.0.1",
-  "goos": "linux",
-  "goarch": "amd64",
-  "runtime": "go1.16.9",
-  "num_goroutine": "9",
-  "num_cpu": "8"
-}
+$ kubectl get httproutes.gateway.networking.k8s.io -o yaml
+...
+    rules:
+    - backendRefs:
+      - group: ""
+        kind: Service
+        name: podinfo-primary
+        port: 9898
+        weight: 0
+      - group: ""
+        kind: Service
+        name: podinfo-canary
+        port: 9898
+        weight: 100
+```
+
+After a short(?) time the canary will then be moved into the primary deployment and the weights swapped back over:
+
+```
+$ kubectl get httproutes.gateway.networking.k8s.io -o yaml
+...
+    rules:
+    - backendRefs:
+      - group: ""
+        kind: Service
+        name: podinfo-primary
+        port: 9898
+        weight: 100
+      - group: ""
+        kind: Service
+        name: podinfo-canary
+        port: 9898
+        weight: 0
 ```
 
 # Gateway App

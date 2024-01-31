@@ -3,7 +3,7 @@ kind: Canary
 metadata:
   name: podinfo
 spec:
-  provider: kubernetes
+  provider: gatewayapi:v1
   targetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -12,10 +12,15 @@ spec:
     port: 9898
     targetPort: 9898
     portDiscovery: true
+    hosts:
+    - "podinfo.example.com"
+    gatewayRefs:
+    - name: contour
+      namespace: projectcontour
   analysis:
-    interval: 30s
-    threshold: 5
-    iterations: 10
+    interval: 10s
+    threshold: 6
+    iterations: 6
     metrics:
     - name: request-success-rate
       thresholdRange:
