@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: podinfo
+spec:
+  hostnames:
+  - "podinfo.example.com"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: podinfo-primary
+      port: 9898
+      weight: 90
+    - name: podinfo-secondary
+      port: 9898
+      weight: 10
