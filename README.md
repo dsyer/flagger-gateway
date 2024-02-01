@@ -37,7 +37,7 @@ $ curl localhost:9898
 The `HTTPRoute` resource is a custom resource that Flagger uses to configure the routing for the canary. It's a bit like an Ingress, but it's not an Ingress. We already downloaded the [CRD](https://github.com/kubernetes-sigs/gateway-api/blob/main/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml) (independent of Flagger and the rest of the API gateway spec) and you can install it in the cluster with:
 
 ```
-$ kubectl apply -f config/httproute.yaml
+$ kubectl apply -f controller/src/main/k8s/crds/httproute.yaml
 ```
 
 ## Gateway API Deployment
