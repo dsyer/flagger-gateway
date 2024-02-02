@@ -8,21 +8,8 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  creationTimestamp: null
   name: spring-manager-role
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
 - apiGroups:
   - ""
   resources:
@@ -36,9 +23,9 @@ rules:
   - update
   - watch
 - apiGroups:
-  - ""
+  - gateway.networking.k8s.io
   resources:
-  - secrets
+  - HTTPRoutes
   verbs:
   - create
   - delete
@@ -48,21 +35,9 @@ rules:
   - update
   - watch
 - apiGroups:
-  - spring.io
+  - gateway.networking.k8s.io
   resources:
-  - configclients
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - spring.io
-  resources:
-  - configclients/status
+  - HTTPRoutes/status
   verbs:
   - get
   - patch
@@ -154,7 +129,7 @@ spec:
         - --metrics-addr=127.0.0.1:8080
         command:
         - /manager
-        image: dsyer/spring-config-operator:latest
+        image: dsyer/spring-route-operator:latest
         name: manager
         resources:
           limits:
