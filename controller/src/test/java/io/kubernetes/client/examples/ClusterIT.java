@@ -15,9 +15,13 @@
 */
 package io.kubernetes.client.examples;
 
-import io.kubernetes.client.examples.models.V1ConfigClient;
-import io.kubernetes.client.examples.models.V1ConfigClientList;
-import io.kubernetes.client.examples.models.V1ConfigClientSpec;
+import io.kubernetes.client.examples.models.HTTPRoute;
+import io.kubernetes.client.examples.models.HTTPRouteList;
+import io.kubernetes.client.examples.models.HTTPRouteSpec;
+import io.kubernetes.client.examples.models.HTTPRouteSpecRulesInner;
+import io.kubernetes.client.examples.models.HTTPRouteSpecRulesInnerBackendRefsInner;
+import io.kubernetes.client.examples.models.HTTPRouteSpecRulesInnerMatchesInner;
+import io.kubernetes.client.examples.models.HTTPRouteSpecRulesInnerMatchesInnerPath;
 import io.kubernetes.client.openapi.models.V1ConfigMap;
 import io.kubernetes.client.openapi.models.V1ConfigMapList;
 import io.kubernetes.client.openapi.models.V1ObjectMeta;
@@ -50,7 +54,7 @@ public class ClusterIT {
 	private final String namespace = "default";
 
 	@Autowired
-	private GenericKubernetesApi<V1ConfigClient, V1ConfigClientList> configs;
+	private GenericKubernetesApi<HTTPRoute, HTTPRouteList> configs;
 
 	@Autowired
 	private GenericKubernetesApi<V1ConfigMap, V1ConfigMapList> maps;
@@ -69,39 +73,53 @@ public class ClusterIT {
 	}
 
 	@Test
-	void createConfigClientAndCheckStatus() throws Exception {
+	void createHTTPRouteAndCheckStatus() throws Exception {
 		var before = maps.list(namespace).getObject().getItems().size();
 
-		var client = new V1ConfigClient();
-		client.setKind("ConfigClient");
-		client.setApiVersion("spring.io/v1");
+		var route = new HTTPRoute();
+		route.setKind("HTTPRoute");
+		route.setApiVersion("gateway.networking.k8s.io/v1");
 
 		var metadata = new V1ObjectMeta();
-		metadata.setGenerateName("config-client-");
+		metadata.setGenerateName("route-");
 		metadata.setNamespace(namespace);
-		client.setMetadata(metadata);
+		route.setMetadata(metadata);
 
-		var spec = new V1ConfigClientSpec();
-		spec.setUrl(
-				"http://" + configserver.getHost() + ":" + configserver.getMappedPort(8888) + "/app/default/main");
-		client.setSpec(spec);
+		var spec = new HTTPRouteSpec();
+		spec.addHostnamesItem("test.example.com");
+		HTTPRouteSpecRulesInner rule = new HTTPRouteSpecRulesInner();
+		HTTPRouteSpecRulesInnerMatchesInner matches = new HTTPRouteSpecRulesInnerMatchesInner();
+		matches.setPath(new HTTPRouteSpecRulesInnerMatchesInnerPath()
+				.type(HTTPRouteSpecRulesInnerMatchesInnerPath.TypeEnum.PATHPREFIX).value("/"));
+		rule.addMatchesItem(matches);
+		rule.addBackendRefsItem(getBackend("primary", 8080, 90));
+		rule.addBackendRefsItem(getBackend("secondary", 8080, 10));
+		spec.addRulesItem(rule);
+		route.setSpec(spec);
 
-		var response = configs.create(client);
+		var response = configs.create(route);
 		Assertions.assertTrue(response.isSuccess());
-		V1ConfigClient result = response.getObject();
+		HTTPRoute result = response.getObject();
 		assertThat(result).isNotNull();
 		name = result.getMetadata().getName();
 		Awaitility.await().atMost(Duration.ofMinutes(1)).until(() -> {
-			KubernetesApiResponse<V1ConfigClient> config = configs.get(namespace, result.getMetadata().getName());
+			KubernetesApiResponse<HTTPRoute> config = configs.get(namespace, result.getMetadata().getName());
+			// TODO: await the route appearing in the gateway
 			return config != null && //
-			config.getObject() != null && //
-			config.getObject().getStatus() != null && //
-			config.getObject().getStatus().getComplete() != null && //
-			config.getObject().getStatus().getComplete().equals(Boolean.TRUE);
+					config.getObject() != null && //
+					config.getObject().getStatus() != null;
 		});
 
 		assertThat(maps.list(namespace).getObject().getItems().size()).isEqualTo(before + 1);
 
+	}
+
+	private HTTPRouteSpecRulesInnerBackendRefsInner getBackend(String name, int port, int weight) {
+		HTTPRouteSpecRulesInnerBackendRefsInner backend = new HTTPRouteSpecRulesInnerBackendRefsInner();
+		backend.setName(name);
+		backend.setWeight(weight);
+		backend.setPort(port);
+		return backend;
 	}
 
 }

@@ -13,39 +13,31 @@ limitations under the License.
 package io.kubernetes.client.examples;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Executors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
-import io.kubernetes.client.examples.models.V1ConfigClient;
-import io.kubernetes.client.examples.models.V1ConfigClientList;
-import io.kubernetes.client.examples.models.V1ConfigClientStatus;
-import io.kubernetes.client.examples.reconciler.ChildProvider;
-import io.kubernetes.client.examples.reconciler.ChildReconciler;
+import io.kubernetes.client.examples.models.HTTPRoute;
+import io.kubernetes.client.examples.models.HTTPRouteList;
 import io.kubernetes.client.examples.reconciler.ParentReconciler;
+import io.kubernetes.client.examples.reconciler.SubReconciler;
 import io.kubernetes.client.extended.controller.Controller;
 import io.kubernetes.client.extended.controller.builder.ControllerBuilder;
+import io.kubernetes.client.extended.controller.reconciler.Result;
 import io.kubernetes.client.informer.SharedIndexInformer;
 import io.kubernetes.client.informer.SharedInformerFactory;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.models.V1ConfigMap;
 import io.kubernetes.client.openapi.models.V1ConfigMapList;
-import io.kubernetes.client.openapi.models.V1ObjectMeta;
 import io.kubernetes.client.util.generic.GenericKubernetesApi;
 
 @SpringBootApplication
-@RegisterReflectionForBinding({ PropertySource.class, Environment.class})
 public class SpringControllerExample {
 
 	public static void main(String[] args) {
@@ -69,14 +61,14 @@ public class SpringControllerExample {
 		}
 
 		@Bean
-		public Controller nodePrintingController(SharedInformerFactory sharedInformerFactory,
+		public Controller routeController(SharedInformerFactory sharedInformerFactory,
 				ParentReconciler<?, ?> reconciler) {
 			var builder = ControllerBuilder //
 					.defaultBuilder(sharedInformerFactory)//
-					.watch((q) -> ControllerBuilder.controllerWatchBuilder(V1ConfigClient.class, q)
+					.watch((q) -> ControllerBuilder.controllerWatchBuilder(HTTPRoute.class, q)
 							.withResyncPeriod(Duration.ofHours(1)).build()) //
 					.withWorkerCount(2);
-			return builder.withReconciler(reconciler).withName("configClientController").build();
+			return builder.withReconciler(reconciler).withName("routeController").build();
 		}
 
 		@Bean
@@ -86,129 +78,35 @@ public class SpringControllerExample {
 		}
 
 		@Bean
-		public GenericKubernetesApi<V1ConfigClient, V1ConfigClientList> configClientApi(ApiClient apiClient) {
-			return new GenericKubernetesApi<>(V1ConfigClient.class, V1ConfigClientList.class, "spring.io", "v1",
-					"configclients", apiClient);
+		public GenericKubernetesApi<HTTPRoute, HTTPRouteList> routeApi(ApiClient apiClient) {
+			return new GenericKubernetesApi<>(HTTPRoute.class, HTTPRouteList.class, "spring.io", "v1",
+					"routes", apiClient);
 		}
 
 		@Bean
-		public SharedIndexInformer<V1ConfigClient> nodeInformer(ApiClient apiClient,
+		public SharedIndexInformer<HTTPRoute> nodeInformer(ApiClient apiClient,
 				SharedInformerFactory sharedInformerFactory,
-				GenericKubernetesApi<V1ConfigClient, V1ConfigClientList> configClientApi) {
-			return sharedInformerFactory.sharedIndexInformerFor(configClientApi, V1ConfigClient.class, 0);
+				GenericKubernetesApi<HTTPRoute, HTTPRouteList> routeApi) {
+			return sharedInformerFactory.sharedIndexInformerFor(routeApi, HTTPRoute.class, 0);
 		}
 
 		@Bean
-		public ParentReconciler<V1ConfigClient, V1ConfigClientList> configClientReconciler(
-				SharedIndexInformer<V1ConfigClient> parentInformer, ApiClient configClientApi,
-				GenericKubernetesApi<V1ConfigMap, V1ConfigMapList> configMapApi) {
+		public ParentReconciler<HTTPRoute, HTTPRouteList> routeReconciler(
+				SharedIndexInformer<HTTPRoute> parentInformer, ApiClient routeApi) {
 			if (log.isDebugEnabled()) {
-				configClientApi.setDebugging(true);
+				routeApi.setDebugging(true);
 			}
-			return new ParentReconciler<>(parentInformer, configClientApi,
-					new ChildReconciler<>(configMapApi, new ConfigMapReconciler()));
+			return new ParentReconciler<>(parentInformer, routeApi,
+					new SubReconciler<HTTPRoute>() {
+
+						@Override
+						public Result reconcile(HTTPRoute parent) {
+							return new Result(false);
+						}
+
+					});
 		}
 
-	}
-
-	private static class ConfigMapReconciler implements ChildProvider<V1ConfigClient, V1ConfigMap> {
-
-		private static Log log = LogFactory.getLog(ConfigMapReconciler.class);
-
-		@Override
-		public void mergeBeforeUpdate(V1ConfigMap current, V1ConfigMap desired) {
-			current.setData(desired.getData());
-		}
-
-		@Override
-		public boolean semanticEquals(V1ConfigMap actual, V1ConfigMap desired) {
-			return ChildProvider.mapEquals(desired.getData(), actual.getData());
-		}
-
-		@Override
-		public V1ConfigMap desired(V1ConfigClient node) {
-			var config = new V1ConfigMap();
-			config.setApiVersion("v1");
-			config.setKind("ConfigMap");
-
-			var metadata = new V1ObjectMeta();
-			metadata.setName(node.getMetadata().getName());
-			metadata.setNamespace(node.getMetadata().getNamespace());
-
-			config.setMetadata(metadata);
-
-			var environment = fetchEnvironment(node);
-			if (node.getStatus() == null) {
-				node.setStatus(new V1ConfigClientStatus());
-			}
-			if (environment == null) {
-				node.getStatus().setComplete(false);
-			}
-			else {
-				config.setData(environment.toMap());
-				node.getStatus().setComplete(true);
-			}
-			return config;
-		}
-
-		private Environment fetchEnvironment(V1ConfigClient node) {
-			RestTemplate rest = new RestTemplate();
-			try {
-				return rest.getForObject(node.getSpec().getUrl(), Environment.class);
-			} //
-			catch (RestClientException e) {
-				log.debug("oops!", e);
-				return null;
-			}
-		}
-
-	}
-
-}
-
-class PropertySource {
-
-	private String name;
-
-	private Map<String, String> source;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Map<String, String> getSource() {
-		return source;
-	}
-
-	public void setSource(Map<String, String> source) {
-		this.source = source;
-	}
-
-}
-
-class Environment {
-
-	private PropertySource[] propertySources = new PropertySource[0];
-
-	public PropertySource[] getPropertySources() {
-		return propertySources;
-	}
-
-	public Map<String, String> toMap() {
-		Map<String, String> map = new HashMap<>();
-		for (int i = propertySources.length; i-- > 0;) {
-			PropertySource source = propertySources[i];
-			map.putAll(source.getSource());
-		}
-		return map;
-	}
-
-	public void setPropertySources(PropertySource[] propertySources) {
-		this.propertySources = propertySources;
 	}
 
 }
