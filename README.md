@@ -182,16 +182,26 @@ Flagger sets up new weights and backends in the `HTTPRoute` object. We can read 
 
 ```
 $ kubectl port-forward services/gateway 8080:80
-$ ./routes.sh
-Updated podinfo-primary to 100
-Updated podinfo-canary to 0
+$ cd controller
+$ node main.js
+2/2/2024, 4:18:37 PM: Watching API
+2/2/2024, 4:18:37 PM: Received event in phase ADDED.
+2/2/2024, 4:18:38 PM: Reconciling "podinfo"
+2/2/2024, 4:18:38 PM: Status for "podinfo" complete: {"hostnames":["podinfo.example.com"],"parentRefs":[{"group":"gateway.networking.k8s.io","kind":"Gateway","name":"contour","namespace":"projectcontour"}],"rules":[{"backendRefs":[{"group":"","kind":"Service","name":"podinfo-primary","port":9898,"weight":100},{"group":"","kind":"Service","name":"podinfo-canary","port":9898,"weight":0}],"matches":[{"path":{"type":"PathPrefix","value":"/"}}]}]}
+2/2/2024, 4:18:38 PM: Deleting route "f2d8682a-61bb-49c9-bbe5-5e01a1f1d342"
+2/2/2024, 4:18:38 PM: Deleting route "d4b4c6d5-9100-401b-bcbb-b24c25ee4ec6"
+2/2/2024, 4:18:38 PM: Deleting route "podinfo-primary"
+2/2/2024, 4:18:38 PM: Deleting route "podinfo-canary"
+2/2/2024, 4:18:38 PM: Processing backend "podinfo-primary": port=9898 with weight 100
+2/2/2024, 4:18:38 PM: Processing backend "podinfo-canary": port=9898 with weight 0
+2/2/2024, 4:18:38 PM: Created route "podinfo-primary" with status 201
+2/2/2024, 4:18:38 PM: Created route "podinfo-canary" with status 201
+2/2/2024, 4:18:38 PM: Refreshing...
 
-Updated podinfo-primary to 100
-Updated podinfo-canary to 0
 ...
 ```
 
-It's an infinite loop updating the gateway every 5 seconds. You can see the weights changing if you trigger the canary and apply some load to the `/podinfo` path:
+It's an infinite loop updating the gateway every time the route changes. You can see the weights changing if you trigger the canary and apply some load to the `/podinfo` path:
 
 ```
 $ kubectl set image deployment/podinfo podinfod=ghcr.io/stefanprodan/podinfo:6.0.0
