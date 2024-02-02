@@ -80,12 +80,12 @@ async function reconcileNow(obj) {
 	log(`Status for "${route.metadata.name}" complete: ${JSON.stringify(route.spec)}`)
 	if (route.spec.rules) {
 		var routes = await fetch(GATEWAY_URL + "/actuator/gateway/routes", { method: "GET" }).then(it => it.json());
-		await routes.forEach(async route => {
+		await Promise.all(routes.map(async route => {
 			log(`Deleting route "${route.route_id}"`);
 			await fetch(GATEWAY_URL + "/actuator/gateway/routes/" + route.route_id, { method: "DELETE" }).then(it => it.status);
-		});
-		await route.spec.rules.forEach(async rule => {
-			await rule.backendRefs.forEach(async ref => {
+		}));
+		await Promise.all(route.spec.rules.map(async rule => {
+			await Promise.all(rule.backendRefs.map(async ref => {
 				log(`Processing backend "${ref.name}": port=${ref.port} with weight ${ref.weight}`);
 				var body = {
 					"predicates": [
@@ -105,10 +105,11 @@ async function reconcileNow(obj) {
 						log(`Error creating route "${ref.name}": ${err}`);
 					}
 				);
-			})
-		})
-		log("Refreshing...")
-		await fetch(GATEWAY_URL + "/actuator/gateway/refresh", { method: "POST" }).then(res => res.status);
+			}))
+		})).then(async it => {
+			log("Refreshing...")
+			await fetch(GATEWAY_URL + "/actuator/gateway/refresh", { method: "POST" }).then(res => res.status);
+		});
 	}
 }
 
