@@ -33,8 +33,6 @@ import io.kubernetes.client.extended.controller.reconciler.Result;
 import io.kubernetes.client.informer.SharedIndexInformer;
 import io.kubernetes.client.informer.SharedInformerFactory;
 import io.kubernetes.client.openapi.ApiClient;
-import io.kubernetes.client.openapi.models.V1ConfigMap;
-import io.kubernetes.client.openapi.models.V1ConfigMapList;
 import io.kubernetes.client.util.generic.GenericKubernetesApi;
 
 @SpringBootApplication
@@ -72,15 +70,9 @@ public class SpringControllerExample {
 		}
 
 		@Bean
-		public GenericKubernetesApi<V1ConfigMap, V1ConfigMapList> configMapApi(ApiClient apiClient) {
-			return new GenericKubernetesApi<>(V1ConfigMap.class, V1ConfigMapList.class, "", "v1", "configmaps",
-					apiClient);
-		}
-
-		@Bean
 		public GenericKubernetesApi<HTTPRoute, HTTPRouteList> routeApi(ApiClient apiClient) {
-			return new GenericKubernetesApi<>(HTTPRoute.class, HTTPRouteList.class, "spring.io", "v1",
-					"routes", apiClient);
+			return new GenericKubernetesApi<>(HTTPRoute.class, HTTPRouteList.class, "gateway.networking.k8s.io", "v1",
+					"httproutes", apiClient);
 		}
 
 		@Bean
@@ -101,6 +93,7 @@ public class SpringControllerExample {
 
 						@Override
 						public Result reconcile(HTTPRoute parent) {
+							log.info("Reconciling: " + parent.getKind() + " - " + parent.getMetadata().getName());
 							return new Result(false);
 						}
 

@@ -25,7 +25,7 @@ rules:
 - apiGroups:
   - gateway.networking.k8s.io
   resources:
-  - HTTPRoutes
+  - httproutes
   verbs:
   - create
   - delete
@@ -37,29 +37,11 @@ rules:
 - apiGroups:
   - gateway.networking.k8s.io
   resources:
-  - HTTPRoutes/status
+  - httproutes/status
   verbs:
   - get
   - patch
   - update
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: spring-proxy-role
-rules:
-- apiGroups:
-  - authentication.k8s.io
-  resources:
-  - tokenreviews
-  verbs:
-  - create
-- apiGroups:
-  - authorization.k8s.io
-  resources:
-  - subjectaccessreviews
-  verbs:
-  - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -69,19 +51,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: spring-manager-role
-subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: spring-system
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: spring-proxy-rolebinding
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: spring-proxy-role
 subjects:
 - kind: ServiceAccount
   name: default
@@ -125,27 +94,5 @@ spec:
         control-plane: controller-manager
     spec:
       containers:
-      - args:
-        - --metrics-addr=127.0.0.1:8080
-        command:
-        - /manager
-        image: dsyer/spring-route-operator:latest
+      - image: localhost:5000/controller:latest
         name: manager
-        resources:
-          limits:
-            cpu: 100m
-            memory: 30Mi
-          requests:
-            cpu: 100m
-            memory: 20Mi
-      - args:
-        - --secure-listen-address=0.0.0.0:8443
-        - --upstream=http://127.0.0.1:8080/
-        - --logtostderr=true
-        - --v=10
-        image: gcr.io/kubebuilder/kube-rbac-proxy:v0.4.0
-        name: kube-rbac-proxy
-        ports:
-        - containerPort: 8443
-          name: https
-      terminationGracePeriodSeconds: 10
