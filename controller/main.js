@@ -5,7 +5,7 @@ const CUSTOMRESOURCE_GROUP = "gateway.networking.k8s.io";
 const CUSTOMRESOURCE_VERSION = "v1";
 const CUSTOMRESOURCE_PLURAL = "httproutes";
 
-const GATEWAY_URL = "http://localhost:8080"
+const GATEWAY_URL = process.env.GATEWAY_URL || "http://localhost:8080"
 
 class HTTPRouteSpec {
 }
