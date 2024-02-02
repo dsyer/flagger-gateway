@@ -8,6 +8,6 @@
         "env": true
     },
     "agent": {
-        "startup_timeout": 200
+        "startup_timeout": 600
     }
 }
