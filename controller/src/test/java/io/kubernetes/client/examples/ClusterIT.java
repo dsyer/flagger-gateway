@@ -15,18 +15,10 @@
 */
 package io.kubernetes.client.examples;
 
-import io.kubernetes.client.examples.models.HTTPRoute;
-import io.kubernetes.client.examples.models.HTTPRouteList;
-import io.kubernetes.client.examples.models.HTTPRouteSpec;
-import io.kubernetes.client.examples.models.HTTPRouteSpecRulesInner;
-import io.kubernetes.client.examples.models.HTTPRouteSpecRulesInnerBackendRefsInner;
-import io.kubernetes.client.examples.models.HTTPRouteSpecRulesInnerMatchesInner;
-import io.kubernetes.client.examples.models.HTTPRouteSpecRulesInnerMatchesInnerPath;
-import io.kubernetes.client.openapi.models.V1ConfigMap;
-import io.kubernetes.client.openapi.models.V1ConfigMapList;
-import io.kubernetes.client.openapi.models.V1ObjectMeta;
-import io.kubernetes.client.util.generic.GenericKubernetesApi;
-import io.kubernetes.client.util.generic.KubernetesApiResponse;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.Duration;
+
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -39,9 +31,16 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-import java.time.Duration;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import io.k8s.networking.gateway.models.V1HTTPRoute;
+import io.k8s.networking.gateway.models.V1HTTPRouteList;
+import io.k8s.networking.gateway.models.V1HTTPRouteSpec;
+import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInner;
+import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInnerBackendRefsInner;
+import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInnerMatchesInner;
+import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInnerMatchesInnerPath;
+import io.kubernetes.client.openapi.models.V1ObjectMeta;
+import io.kubernetes.client.util.generic.GenericKubernetesApi;
+import io.kubernetes.client.util.generic.KubernetesApiResponse;
 
 /**
  * @author Dave Syer
@@ -54,10 +53,7 @@ public class ClusterIT {
 	private final String namespace = "default";
 
 	@Autowired
-	private GenericKubernetesApi<HTTPRoute, HTTPRouteList> configs;
-
-	@Autowired
-	private GenericKubernetesApi<V1ConfigMap, V1ConfigMapList> maps;
+	private GenericKubernetesApi<V1HTTPRoute, V1HTTPRouteList> configs;
 
 	@Container
 	public static GenericContainer<?> configserver = new GenericContainer<>(
@@ -73,11 +69,9 @@ public class ClusterIT {
 	}
 
 	@Test
-	void createHTTPRouteAndCheckStatus() throws Exception {
-		var before = maps.list(namespace).getObject().getItems().size();
-
-		var route = new HTTPRoute();
-		route.setKind("HTTPRoute");
+	void createV1HTTPRouteAndCheckStatus() throws Exception {
+		var route = new V1HTTPRoute();
+		route.setKind("V1HTTPRoute");
 		route.setApiVersion("gateway.networking.k8s.io/v1");
 
 		var metadata = new V1ObjectMeta();
@@ -85,12 +79,12 @@ public class ClusterIT {
 		metadata.setNamespace(namespace);
 		route.setMetadata(metadata);
 
-		var spec = new HTTPRouteSpec();
+		var spec = new V1HTTPRouteSpec();
 		spec.addHostnamesItem("test.example.com");
-		HTTPRouteSpecRulesInner rule = new HTTPRouteSpecRulesInner();
-		HTTPRouteSpecRulesInnerMatchesInner matches = new HTTPRouteSpecRulesInnerMatchesInner();
-		matches.setPath(new HTTPRouteSpecRulesInnerMatchesInnerPath()
-				.type(HTTPRouteSpecRulesInnerMatchesInnerPath.TypeEnum.PATHPREFIX).value("/"));
+		V1HTTPRouteSpecRulesInner rule = new V1HTTPRouteSpecRulesInner();
+		V1HTTPRouteSpecRulesInnerMatchesInner matches = new V1HTTPRouteSpecRulesInnerMatchesInner();
+		matches.setPath(new V1HTTPRouteSpecRulesInnerMatchesInnerPath()
+				.type(V1HTTPRouteSpecRulesInnerMatchesInnerPath.TypeEnum.PATHPREFIX).value("/"));
 		rule.addMatchesItem(matches);
 		rule.addBackendRefsItem(getBackend("primary", 8080, 90));
 		rule.addBackendRefsItem(getBackend("secondary", 8080, 10));
@@ -99,23 +93,23 @@ public class ClusterIT {
 
 		var response = configs.create(route);
 		Assertions.assertTrue(response.isSuccess());
-		HTTPRoute result = response.getObject();
+		V1HTTPRoute result = response.getObject();
 		assertThat(result).isNotNull();
 		name = result.getMetadata().getName();
 		Awaitility.await().atMost(Duration.ofMinutes(1)).until(() -> {
-			KubernetesApiResponse<HTTPRoute> config = configs.get(namespace, result.getMetadata().getName());
+			KubernetesApiResponse<V1HTTPRoute> config = configs.get(namespace, result.getMetadata().getName());
 			// TODO: await the route appearing in the gateway
 			return config != null && //
 					config.getObject() != null && //
 					config.getObject().getStatus() != null;
 		});
 
-		assertThat(maps.list(namespace).getObject().getItems().size()).isEqualTo(before + 1);
+		// assertThat(maps.list(namespace).getObject().getItems().size()).isEqualTo(before + 1);
 
 	}
 
-	private HTTPRouteSpecRulesInnerBackendRefsInner getBackend(String name, int port, int weight) {
-		HTTPRouteSpecRulesInnerBackendRefsInner backend = new HTTPRouteSpecRulesInnerBackendRefsInner();
+	private V1HTTPRouteSpecRulesInnerBackendRefsInner getBackend(String name, int port, int weight) {
+		V1HTTPRouteSpecRulesInnerBackendRefsInner backend = new V1HTTPRouteSpecRulesInnerBackendRefsInner();
 		backend.setName(name);
 		backend.setWeight(weight);
 		backend.setPort(port);

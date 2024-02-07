@@ -23,8 +23,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.kubernetes.client.examples.models.HTTPRoute;
-import io.kubernetes.client.examples.models.HTTPRouteList;
+import io.k8s.networking.gateway.models.V1HTTPRoute;
+import io.k8s.networking.gateway.models.V1HTTPRouteList;
 import io.kubernetes.client.examples.reconciler.ParentReconciler;
 import io.kubernetes.client.examples.reconciler.SubReconciler;
 import io.kubernetes.client.extended.controller.Controller;
@@ -63,36 +63,36 @@ public class SpringControllerExample {
 				ParentReconciler<?, ?> reconciler) {
 			var builder = ControllerBuilder //
 					.defaultBuilder(sharedInformerFactory)//
-					.watch((q) -> ControllerBuilder.controllerWatchBuilder(HTTPRoute.class, q)
+					.watch((q) -> ControllerBuilder.controllerWatchBuilder(V1HTTPRoute.class, q)
 							.withResyncPeriod(Duration.ofHours(1)).build()) //
 					.withWorkerCount(2);
 			return builder.withReconciler(reconciler).withName("routeController").build();
 		}
 
 		@Bean
-		public GenericKubernetesApi<HTTPRoute, HTTPRouteList> routeApi(ApiClient apiClient) {
-			return new GenericKubernetesApi<>(HTTPRoute.class, HTTPRouteList.class, "gateway.networking.k8s.io", "v1",
-					"httproutes", apiClient);
+		public GenericKubernetesApi<V1HTTPRoute, V1HTTPRouteList> routeApi(ApiClient apiClient) {
+			return new GenericKubernetesApi<>(V1HTTPRoute.class, V1HTTPRouteList.class, "gateway.networking.k8s.io", "v1",
+					"V1HTTPRoutes", apiClient);
 		}
 
 		@Bean
-		public SharedIndexInformer<HTTPRoute> nodeInformer(ApiClient apiClient,
+		public SharedIndexInformer<V1HTTPRoute> nodeInformer(ApiClient apiClient,
 				SharedInformerFactory sharedInformerFactory,
-				GenericKubernetesApi<HTTPRoute, HTTPRouteList> routeApi) {
-			return sharedInformerFactory.sharedIndexInformerFor(routeApi, HTTPRoute.class, 0);
+				GenericKubernetesApi<V1HTTPRoute, V1HTTPRouteList> routeApi) {
+			return sharedInformerFactory.sharedIndexInformerFor(routeApi, V1HTTPRoute.class, 0);
 		}
 
 		@Bean
-		public ParentReconciler<HTTPRoute, HTTPRouteList> routeReconciler(
-				SharedIndexInformer<HTTPRoute> parentInformer, ApiClient routeApi) {
+		public ParentReconciler<V1HTTPRoute, V1HTTPRouteList> routeReconciler(
+				SharedIndexInformer<V1HTTPRoute> parentInformer, ApiClient routeApi) {
 			if (log.isDebugEnabled()) {
 				routeApi.setDebugging(true);
 			}
 			return new ParentReconciler<>(parentInformer, routeApi,
-					new SubReconciler<HTTPRoute>() {
+					new SubReconciler<V1HTTPRoute>() {
 
 						@Override
-						public Result reconcile(HTTPRoute parent) {
+						public Result reconcile(V1HTTPRoute parent) {
 							log.info("Reconciling: " + parent.getKind() + " - " + parent.getMetadata().getName());
 							return new Result(false);
 						}
