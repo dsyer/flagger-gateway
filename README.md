@@ -178,7 +178,7 @@ The gateway also has a `/canary` endpoint that will return the canary version of
 
 ## Dynamic Weights
 
-Flagger sets up new weights and backends in the `HTTPRoute` object. We can read those and push them into the gateway using the `resource.sh` script:
+Flagger sets up new weights and backends in the `HTTPRoute` object. We can read those and push them into the gateway using the `routes.sh` script:
 
 ```
 $ kubectl port-forward services/gateway 8080:80
