@@ -16,7 +16,7 @@ spec:
   routes:
   - uri: http://podinfo:9898
     predicates:
-    - Path=/app
+    - Path=/podinfo
     filters:
     - StripPrefix=1
   - uri: http://podinfo-canary:9898

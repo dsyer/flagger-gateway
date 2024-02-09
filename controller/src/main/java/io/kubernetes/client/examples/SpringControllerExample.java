@@ -147,9 +147,9 @@ public class SpringControllerExample {
 				parent.getSpec().getRules().forEach(rule -> {
 					rule.getBackendRefs().forEach(backend -> {
 						V1SpringCloudGatewayRouteConfigSpecRoutesInner route = new V1SpringCloudGatewayRouteConfigSpecRoutesInner();
-						route.addFiltersItem("stripPrefix=1");
-						route.addFiltersItem("Weight=" + name + "," + backend.getWeight());
+						route.addFiltersItem("StripPrefix=1");
 						route.addPredicatesItem("Path=/" + name);
+						route.addPredicatesItem("Weight=" + name + "," + backend.getWeight());
 						route.setUri("http://" + backend.getName() + ":" + backend.getPort());
 						config.getSpec().getRoutes().add(route);
 					});

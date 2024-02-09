@@ -37,7 +37,7 @@ $ curl localhost:9898
 The `HTTPRoute` resource is a custom resource that Flagger uses to configure the routing for the canary. It's a bit like an Ingress, but it's not an Ingress. We already downloaded the [CRD](https://github.com/kubernetes-sigs/gateway-api/blob/main/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml) (independent of Flagger and the rest of the API gateway spec) and you can install it in the cluster with:
 
 ```
-$ kubectl apply -f controller/src/main/k8s/crds/httproute.yaml
+$ kubectl apply -f config/httproute.yaml
 ```
 
 ## Gateway API Deployment
@@ -154,10 +154,10 @@ $ kubectl apply -f config/gateway.yaml
 Test that the gateway is working:
 
 ```
-$ kubectl port-forward services/gateway 8080:80
-Forwarding from 127.0.0.1:8080 -> 8080
-Forwarding from [::1]:8080 -> 8080
-$ curl localhost:8080/app/
+$ kubectl port-forward services/gateway 8000:80
+Forwarding from 127.0.0.1:8000 -> 8000
+Forwarding from [::1]:8000 -> 8000
+$ curl localhost:8000/app/
 {
   "hostname": "podinfo-5d5dbc4d84-mwmxm",
   "version": "6.0.1",
@@ -177,22 +177,32 @@ The gateway also has a `/canary` endpoint that will return the canary version of
 
 ## Dynamic Weights
 
-Flagger sets up new weights and backends in the `HTTPRoute` object. We can read those and push them into the gateway using the `resource.sh` script:
+Flagger sets up new weights and backends in the `HTTPRoute` object. We can read those routes and shadow them into a Spring Cloud Gateway route using the controller app in this repo. The controller app will read the `HTTPRoute` objects and create a new route in the gateway for each one. It will also update the weights in the gateway route as the canary progresses.
 
 ```
-$ kubectl port-forward services/gateway 8080:80
-$ ./routes.sh
-Updated podinfo-primary to 100
-Updated podinfo-canary to 0
-
-Updated podinfo-primary to 100
-Updated podinfo-canary to 0
-...
-```
-
-It's an infinite loop updating the gateway every 5 seconds. You can see the weights changing if you trigger the canary and apply some load to the `/podinfo` path:
-
-```
+$ ./mvnw install
+$ java -jar controller/target/*.jar # or use the IDE
 $ kubectl set image deployment/podinfo podinfod=ghcr.io/stefanprodan/podinfo:6.0.0
-$ ab -c 2 -n 30000 http://localhost:8080/app/podinfo
+$ ab -c 2 -n 3000 http://localhost:8000/podinfo
+```
+
+See the weights change in the Spring Cloud Gateway config (primary and canary will swap over from 100-0 to 90-10 and back to 100-0):
+
+```
+$ kubectl get springcloudgatewayrouteconfigs.tanzu.vmware.com podinfo -o json | jq '.spec.routes | map({(.uri):.predicat
+es})'
+[
+  {
+    "http://podinfo-primary:9898": [
+      "Path=/podinfo",
+      "Weight=podinfo,90"
+    ]
+  },
+  {
+    "http://podinfo-canary:9898": [
+      "Path=/podinfo",
+      "Weight=podinfo,10"
+    ]
+  }
+]
 ```
