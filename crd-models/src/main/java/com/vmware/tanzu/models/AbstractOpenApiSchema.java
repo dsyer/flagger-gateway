@@ -11,7 +11,7 @@
  */
 
 
-package io.k8s.networking.gateway.models;
+package com.vmware.tanzu.models;
 
 import io.kubernetes.client.openapi.ApiException;
 import java.util.Objects;

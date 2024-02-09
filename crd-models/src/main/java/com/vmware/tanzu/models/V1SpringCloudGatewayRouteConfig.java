@@ -11,7 +11,7 @@
  */
 
 
-package io.k8s.networking.gateway.models;
+package com.vmware.tanzu.models;
 
 import java.util.Objects;
 import com.google.gson.TypeAdapter;
@@ -19,8 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.k8s.networking.gateway.models.V1HTTPRouteSpec;
-import io.k8s.networking.gateway.models.V1HTTPRouteStatus;
+import com.vmware.tanzu.models.V1SpringCloudGatewayRouteConfigSpec;
 import io.kubernetes.client.openapi.models.V1ObjectMeta;
 import java.io.IOException;
 import java.util.Arrays;
@@ -50,10 +49,10 @@ import java.util.Set;
 import io.kubernetes.client.openapi.JSON;
 
 /**
- * HTTPRoute provides a way to route HTTP requests. This includes the capability to match requests by hostname, path, header, or query param. Filters can be used to specify additional processing steps. Backends specify where matching requests should be routed.
+ * V1SpringCloudGatewayRouteConfig
  */
 @jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesObject {
+public class V1SpringCloudGatewayRouteConfig implements io.kubernetes.client.common.KubernetesObject {
   public static final String SERIALIZED_NAME_API_VERSION = "apiVersion";
   @SerializedName(SERIALIZED_NAME_API_VERSION)
   private String apiVersion;
@@ -68,16 +67,12 @@ public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesO
 
   public static final String SERIALIZED_NAME_SPEC = "spec";
   @SerializedName(SERIALIZED_NAME_SPEC)
-  private V1HTTPRouteSpec spec;
+  private V1SpringCloudGatewayRouteConfigSpec spec;
 
-  public static final String SERIALIZED_NAME_STATUS = "status";
-  @SerializedName(SERIALIZED_NAME_STATUS)
-  private V1HTTPRouteStatus status;
-
-  public V1beta1HTTPRoute() {
+  public V1SpringCloudGatewayRouteConfig() {
   }
 
-  public V1beta1HTTPRoute apiVersion(String apiVersion) {
+  public V1SpringCloudGatewayRouteConfig apiVersion(String apiVersion) {
     this.apiVersion = apiVersion;
     return this;
   }
@@ -96,7 +91,7 @@ public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesO
   }
 
 
-  public V1beta1HTTPRoute kind(String kind) {
+  public V1SpringCloudGatewayRouteConfig kind(String kind) {
     this.kind = kind;
     return this;
   }
@@ -115,7 +110,7 @@ public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesO
   }
 
 
-  public V1beta1HTTPRoute metadata(V1ObjectMeta metadata) {
+  public V1SpringCloudGatewayRouteConfig metadata(V1ObjectMeta metadata) {
     this.metadata = metadata;
     return this;
   }
@@ -134,7 +129,7 @@ public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesO
   }
 
 
-  public V1beta1HTTPRoute spec(V1HTTPRouteSpec spec) {
+  public V1SpringCloudGatewayRouteConfig spec(V1SpringCloudGatewayRouteConfigSpec spec) {
     this.spec = spec;
     return this;
   }
@@ -143,32 +138,13 @@ public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesO
    * Get spec
    * @return spec
   **/
-  @jakarta.annotation.Nonnull
-  public V1HTTPRouteSpec getSpec() {
+  @jakarta.annotation.Nullable
+  public V1SpringCloudGatewayRouteConfigSpec getSpec() {
     return spec;
   }
 
-  public void setSpec(V1HTTPRouteSpec spec) {
+  public void setSpec(V1SpringCloudGatewayRouteConfigSpec spec) {
     this.spec = spec;
-  }
-
-
-  public V1beta1HTTPRoute status(V1HTTPRouteStatus status) {
-    this.status = status;
-    return this;
-  }
-
-   /**
-   * Get status
-   * @return status
-  **/
-  @jakarta.annotation.Nullable
-  public V1HTTPRouteStatus getStatus() {
-    return status;
-  }
-
-  public void setStatus(V1HTTPRouteStatus status) {
-    this.status = status;
   }
 
 
@@ -181,28 +157,26 @@ public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesO
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1beta1HTTPRoute v1beta1HTTPRoute = (V1beta1HTTPRoute) o;
-    return Objects.equals(this.apiVersion, v1beta1HTTPRoute.apiVersion) &&
-        Objects.equals(this.kind, v1beta1HTTPRoute.kind) &&
-        Objects.equals(this.metadata, v1beta1HTTPRoute.metadata) &&
-        Objects.equals(this.spec, v1beta1HTTPRoute.spec) &&
-        Objects.equals(this.status, v1beta1HTTPRoute.status);
+    V1SpringCloudGatewayRouteConfig v1SpringCloudGatewayRouteConfig = (V1SpringCloudGatewayRouteConfig) o;
+    return Objects.equals(this.apiVersion, v1SpringCloudGatewayRouteConfig.apiVersion) &&
+        Objects.equals(this.kind, v1SpringCloudGatewayRouteConfig.kind) &&
+        Objects.equals(this.metadata, v1SpringCloudGatewayRouteConfig.metadata) &&
+        Objects.equals(this.spec, v1SpringCloudGatewayRouteConfig.spec);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(apiVersion, kind, metadata, spec, status);
+    return Objects.hash(apiVersion, kind, metadata, spec);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1beta1HTTPRoute {\n");
+    sb.append("class V1SpringCloudGatewayRouteConfig {\n");
     sb.append("    apiVersion: ").append(toIndentedString(apiVersion)).append("\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("    spec: ").append(toIndentedString(spec)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -229,38 +203,29 @@ public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesO
     openapiFields.add("kind");
     openapiFields.add("metadata");
     openapiFields.add("spec");
-    openapiFields.add("status");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("spec");
   }
 
  /**
   * Validates the JSON Element and throws an exception if issues found
   *
   * @param jsonElement JSON Element
-  * @throws IOException if the JSON Element is invalid with respect to V1beta1HTTPRoute
+  * @throws IOException if the JSON Element is invalid with respect to V1SpringCloudGatewayRouteConfig
   */
   public static void validateJsonElement(JsonElement jsonElement) throws IOException {
       if (jsonElement == null) {
-        if (!V1beta1HTTPRoute.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in V1beta1HTTPRoute is not found in the empty JSON string", V1beta1HTTPRoute.openapiRequiredFields.toString()));
+        if (!V1SpringCloudGatewayRouteConfig.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in V1SpringCloudGatewayRouteConfig is not found in the empty JSON string", V1SpringCloudGatewayRouteConfig.openapiRequiredFields.toString()));
         }
       }
 
       Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
       for (Map.Entry<String, JsonElement> entry : entries) {
-        if (!V1beta1HTTPRoute.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1beta1HTTPRoute` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
-        }
-      }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : V1beta1HTTPRoute.openapiRequiredFields) {
-        if (jsonElement.getAsJsonObject().get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
+        if (!V1SpringCloudGatewayRouteConfig.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1SpringCloudGatewayRouteConfig` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
@@ -270,11 +235,9 @@ public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesO
       if ((jsonObj.get("kind") != null && !jsonObj.get("kind").isJsonNull()) && !jsonObj.get("kind").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `kind` to be a primitive type in the JSON string but got `%s`", jsonObj.get("kind").toString()));
       }
-      // validate the required field `spec`
-      V1HTTPRouteSpec.validateJsonElement(jsonObj.get("spec"));
-      // validate the optional field `status`
-      if (jsonObj.get("status") != null && !jsonObj.get("status").isJsonNull()) {
-        V1HTTPRouteStatus.validateJsonElement(jsonObj.get("status"));
+      // validate the optional field `spec`
+      if (jsonObj.get("spec") != null && !jsonObj.get("spec").isJsonNull()) {
+        V1SpringCloudGatewayRouteConfigSpec.validateJsonElement(jsonObj.get("spec"));
       }
   }
 
@@ -282,22 +245,22 @@ public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesO
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!V1beta1HTTPRoute.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'V1beta1HTTPRoute' and its subtypes
+       if (!V1SpringCloudGatewayRouteConfig.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'V1SpringCloudGatewayRouteConfig' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<V1beta1HTTPRoute> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(V1beta1HTTPRoute.class));
+       final TypeAdapter<V1SpringCloudGatewayRouteConfig> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(V1SpringCloudGatewayRouteConfig.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<V1beta1HTTPRoute>() {
+       return (TypeAdapter<T>) new TypeAdapter<V1SpringCloudGatewayRouteConfig>() {
            @Override
-           public void write(JsonWriter out, V1beta1HTTPRoute value) throws IOException {
+           public void write(JsonWriter out, V1SpringCloudGatewayRouteConfig value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public V1beta1HTTPRoute read(JsonReader in) throws IOException {
+           public V1SpringCloudGatewayRouteConfig read(JsonReader in) throws IOException {
              JsonElement jsonElement = elementAdapter.read(in);
              validateJsonElement(jsonElement);
              return thisAdapter.fromJsonTree(jsonElement);
@@ -308,18 +271,18 @@ public class V1beta1HTTPRoute implements io.kubernetes.client.common.KubernetesO
   }
 
  /**
-  * Create an instance of V1beta1HTTPRoute given an JSON string
+  * Create an instance of V1SpringCloudGatewayRouteConfig given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of V1beta1HTTPRoute
-  * @throws IOException if the JSON string is invalid with respect to V1beta1HTTPRoute
+  * @return An instance of V1SpringCloudGatewayRouteConfig
+  * @throws IOException if the JSON string is invalid with respect to V1SpringCloudGatewayRouteConfig
   */
-  public static V1beta1HTTPRoute fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, V1beta1HTTPRoute.class);
+  public static V1SpringCloudGatewayRouteConfig fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, V1SpringCloudGatewayRouteConfig.class);
   }
 
  /**
-  * Convert an instance of V1beta1HTTPRoute to an JSON string
+  * Convert an instance of V1SpringCloudGatewayRouteConfig to an JSON string
   *
   * @return JSON string
   */

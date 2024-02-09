@@ -64,12 +64,22 @@ public class ChildReconciler<P extends KubernetesObject, T extends KubernetesObj
 				}
 			}
 		}
+		if (items.isEmpty()) {
+			// Match by name
+			for (KubernetesObject item : children.list(parent.getMetadata().getNamespace()).getObject().getItems()) {
+				if (parent.getMetadata().getName().equals(item.getMetadata().getName())) {
+					@SuppressWarnings("unchecked")
+					T thing = (T) item;
+					items.add(thing);
+					break;
+				}
+			}
+		}
 
 		T actual = null;
 		if (items.size() == 1) {
 			actual = items.get(0);
-		}
-		else {
+		} else {
 			for (T item : items) {
 				log.info("Deleting " + item);
 				children.delete(item.getMetadata().getNamespace(), item.getMetadata().getName());
@@ -90,13 +100,11 @@ public class ChildReconciler<P extends KubernetesObject, T extends KubernetesObj
 			try {
 				actual = children.create(desired).throwsApiException().getObject();
 				log.debug("Created: \n" + actual);
-			}
-			catch (ApiException e) {
+			} catch (ApiException e) {
 				reflectStatusOnParent(parent, actual, e);
 				throw new IllegalStateException(e);
 			}
-		}
-		else {
+		} else {
 
 			harmonizeImmutableFields(actual, desired);
 			if (!semanticEquals(actual, desired)) {

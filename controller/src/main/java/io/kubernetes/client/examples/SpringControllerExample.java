@@ -13,6 +13,8 @@ limitations under the License.
 package io.kubernetes.client.examples;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 
 import org.apache.commons.logging.Log;
@@ -23,16 +25,23 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.vmware.tanzu.models.V1SpringCloudGatewayRouteConfig;
+import com.vmware.tanzu.models.V1SpringCloudGatewayRouteConfigList;
+import com.vmware.tanzu.models.V1SpringCloudGatewayRouteConfigSpec;
+import com.vmware.tanzu.models.V1SpringCloudGatewayRouteConfigSpecRoutesInner;
+import com.vmware.tanzu.models.V1SpringCloudGatewayRouteConfigSpecService;
+
 import io.k8s.networking.gateway.models.V1HTTPRoute;
 import io.k8s.networking.gateway.models.V1HTTPRouteList;
+import io.kubernetes.client.examples.reconciler.ChildProvider;
+import io.kubernetes.client.examples.reconciler.ChildReconciler;
 import io.kubernetes.client.examples.reconciler.ParentReconciler;
-import io.kubernetes.client.examples.reconciler.SubReconciler;
 import io.kubernetes.client.extended.controller.Controller;
 import io.kubernetes.client.extended.controller.builder.ControllerBuilder;
-import io.kubernetes.client.extended.controller.reconciler.Result;
 import io.kubernetes.client.informer.SharedIndexInformer;
 import io.kubernetes.client.informer.SharedInformerFactory;
 import io.kubernetes.client.openapi.ApiClient;
+import io.kubernetes.client.openapi.models.V1ObjectMeta;
 import io.kubernetes.client.util.generic.GenericKubernetesApi;
 
 @SpringBootApplication
@@ -70,9 +79,19 @@ public class SpringControllerExample {
 		}
 
 		@Bean
+		public GenericKubernetesApi<V1SpringCloudGatewayRouteConfig, V1SpringCloudGatewayRouteConfigList> springRouteApi(
+				ApiClient apiClient) {
+			return new GenericKubernetesApi<>(V1SpringCloudGatewayRouteConfig.class,
+					V1SpringCloudGatewayRouteConfigList.class, "tanzu.vmware.com", "v1",
+					"springcloudgatewayrouteconfigs",
+					apiClient);
+		}
+
+		@Bean
 		public GenericKubernetesApi<V1HTTPRoute, V1HTTPRouteList> routeApi(ApiClient apiClient) {
-			return new GenericKubernetesApi<>(V1HTTPRoute.class, V1HTTPRouteList.class, "gateway.networking.k8s.io", "v1",
-					"V1HTTPRoutes", apiClient);
+			return new GenericKubernetesApi<>(V1HTTPRoute.class, V1HTTPRouteList.class, "gateway.networking.k8s.io",
+					"v1",
+					"httproutes", apiClient);
 		}
 
 		@Bean
@@ -84,22 +103,60 @@ public class SpringControllerExample {
 
 		@Bean
 		public ParentReconciler<V1HTTPRoute, V1HTTPRouteList> routeReconciler(
-				SharedIndexInformer<V1HTTPRoute> parentInformer, ApiClient routeApi) {
+				SharedIndexInformer<V1HTTPRoute> parentInformer, ApiClient routeApi,
+				GenericKubernetesApi<V1SpringCloudGatewayRouteConfig, V1SpringCloudGatewayRouteConfigList> springRouteApi) {
 			if (log.isDebugEnabled()) {
 				routeApi.setDebugging(true);
 			}
 			return new ParentReconciler<>(parentInformer, routeApi,
-					new SubReconciler<V1HTTPRoute>() {
-
-						@Override
-						public Result reconcile(V1HTTPRoute parent) {
-							log.info("Reconciling: " + parent.getKind() + " - " + parent.getMetadata().getName());
-							return new Result(false);
-						}
-
-					});
+					new ChildReconciler<>(springRouteApi, new SpringRouteReconciler()));
 		}
 
+		private static class SpringRouteReconciler
+				implements ChildProvider<V1HTTPRoute, V1SpringCloudGatewayRouteConfig> {
+
+			private static Log log = LogFactory.getLog(SpringRouteReconciler.class);
+
+			@Override
+			public void mergeBeforeUpdate(V1SpringCloudGatewayRouteConfig current,
+					V1SpringCloudGatewayRouteConfig desired) {
+				current.setSpec(desired.getSpec());
+			}
+
+			@Override
+			public boolean semanticEquals(V1SpringCloudGatewayRouteConfig actual,
+					V1SpringCloudGatewayRouteConfig desired) {
+				return desired.getSpec().equals(actual.getSpec());
+			}
+
+			@Override
+			public V1SpringCloudGatewayRouteConfig desired(V1HTTPRoute parent) {
+				String name = parent.getMetadata().getName();
+				V1SpringCloudGatewayRouteConfig config = new V1SpringCloudGatewayRouteConfig();
+				config.setKind("SpringCloudGatewayRouteConfig");
+				config.setApiVersion("tanzu.vmware.com/v1");
+				var metadata = new V1ObjectMeta();
+				metadata.setName(parent.getMetadata().getName());
+				metadata.setNamespace(parent.getMetadata().getNamespace());
+				config.setMetadata(metadata);
+				V1SpringCloudGatewayRouteConfigSpecService service = new V1SpringCloudGatewayRouteConfigSpecService();
+				service.setName(name);
+				config.setSpec(new V1SpringCloudGatewayRouteConfigSpec());
+				config.getSpec().setService(service);
+				config.getSpec().setRoutes(new ArrayList<>());
+				parent.getSpec().getRules().forEach(rule -> {
+					rule.getBackendRefs().forEach(backend -> {
+						V1SpringCloudGatewayRouteConfigSpecRoutesInner route = new V1SpringCloudGatewayRouteConfigSpecRoutesInner();
+						route.addFiltersItem("stripPrefix=1");
+						route.addFiltersItem("Weight=" + name + "," + backend.getWeight());
+						route.addPredicatesItem("Path=/" + name);
+						route.setUri("http://" + backend.getName() + ":" + backend.getPort());
+						config.getSpec().getRoutes().add(route);
+					});
+				});
+				return config;
+			}
+		}
 	}
 
 }

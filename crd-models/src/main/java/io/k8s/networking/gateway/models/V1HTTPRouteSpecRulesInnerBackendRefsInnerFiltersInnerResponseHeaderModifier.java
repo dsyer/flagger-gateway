@@ -14,7 +14,6 @@
 package io.k8s.networking.gateway.models;
 
 import java.util.Objects;
-import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,6 +22,7 @@ import com.google.gson.stream.JsonWriter;
 import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifierAddInner;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -45,7 +45,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import io.kubernetes.client.openapi.JSON;
@@ -71,7 +70,6 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeader
   }
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier add(List<V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifierAddInner> add) {
-    
     this.add = add;
     return this;
   }
@@ -93,14 +91,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeader
     return add;
   }
 
-
   public void setAdd(List<V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifierAddInner> add) {
     this.add = add;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier remove(List<String> remove) {
-    
     this.remove = remove;
     return this;
   }
@@ -122,14 +118,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeader
     return remove;
   }
 
-
   public void setRemove(List<String> remove) {
     this.remove = remove;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier set(List<V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifierAddInner> set) {
-    
     this.set = set;
     return this;
   }
@@ -150,7 +144,6 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeader
   public List<V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifierAddInner> getSet() {
     return set;
   }
-
 
   public void setSet(List<V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifierAddInner> set) {
     this.set = set;
@@ -215,25 +208,26 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeader
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier is not found in the empty JSON string", V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("add") != null && !jsonObj.get("add").isJsonNull()) {
         JsonArray jsonArrayadd = jsonObj.getAsJsonArray("add");
         if (jsonArrayadd != null) {
@@ -244,12 +238,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeader
 
           // validate the optional field `add` (array)
           for (int i = 0; i < jsonArrayadd.size(); i++) {
-            V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifierAddInner.validateJsonObject(jsonArrayadd.get(i).getAsJsonObject());
+            V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifierAddInner.validateJsonElement(jsonArrayadd.get(i));
           };
         }
       }
       // ensure the optional json data is an array if present
-      if (jsonObj.get("remove") != null && !jsonObj.get("remove").isJsonArray()) {
+      if (jsonObj.get("remove") != null && !jsonObj.get("remove").isJsonNull() && !jsonObj.get("remove").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `remove` to be an array in the JSON string but got `%s`", jsonObj.get("remove").toString()));
       }
       if (jsonObj.get("set") != null && !jsonObj.get("set").isJsonNull()) {
@@ -262,7 +256,7 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeader
 
           // validate the optional field `set` (array)
           for (int i = 0; i < jsonArrayset.size(); i++) {
-            V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifierAddInner.validateJsonObject(jsonArrayset.get(i).getAsJsonObject());
+            V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifierAddInner.validateJsonElement(jsonArrayset.get(i));
           };
         }
       }
@@ -288,9 +282,9 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeader
 
            @Override
            public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

@@ -6,9 +6,11 @@ readonly CLIENT_GEN_DIR="/tmp/kubernetes-client-gen"
 readonly PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 readonly LOCAL_MANIFEST_FILE_1=$PROJECT_ROOT/config/httproute.yaml
+readonly LOCAL_MANIFEST_FILE_2=$PROJECT_ROOT/config/gatewayroute.yaml
 
-readonly SCG_PACKAGE=io/k8s/networking/gateway
-readonly GENERATED_SOURCES_PATH=src/main/java/$SCG_PACKAGE
+readonly GWY_PACKAGE=io/k8s/networking/gateway
+readonly SCG_PACKAGE=com/vmware/tanzu
+readonly GENERATED_SOURCES_PATH=src/main/java
 readonly SWAGGER_DEFINITIONS=$PROJECT_ROOT/build/swagger
 readonly GENERATOR_OUTPUT=$PROJECT_ROOT/build/gen
 
@@ -22,10 +24,12 @@ deleteExisting() {
 
 applyCrd() {
   kubectl apply --validate=false -f "$LOCAL_MANIFEST_FILE_1"
+  kubectl apply --validate=false -f "$LOCAL_MANIFEST_FILE_2"
 }
 
 deleteCrd() {
-  kubectl delete -f "$LOCAL_MANIFEST_FILE_1" || true
+  kubectl delete -f "$LOCAL_MANIFEST_FILE_1" 2>&1 || true
+  kubectl delete -f "$LOCAL_MANIFEST_FILE_2" 2>&1 || true
 }
 
 generate() {
@@ -42,17 +46,21 @@ generate() {
   git checkout 84f2bc9e34129f92606a00fccb8c5c62204012b9
   mkdir -p "$PROJECT_ROOT/build"
   kubectl get --raw="/openapi/v2" > "$SWAGGER_DEFINITIONS"
-  while ! (grep -Fq '"HTTPRoute"' "$SWAGGER_DEFINITIONS"); do
+  while ! (grep -Fq '"HTTPRoute"' "$SWAGGER_DEFINITIONS" && grep -Fq '"SpringCloudGatewayRouteConfig"' "$SWAGGER_DEFINITIONS"); do
     echo "Waiting for CRD to be applied..."
     sleep 1
     kubectl get --raw="/openapi/v2" > "$SWAGGER_DEFINITIONS"
   done
 
+  export OPENAPI_GENERATOR_COMMIT=v7.3.0
+
   bash java-crd-cmd.sh -n io.k8s.networking.gateway -p io.k8s.networking.gateway -l 2 -h true -o "$GENERATOR_OUTPUT" -g true < "$SWAGGER_DEFINITIONS"
+  bash java-crd-cmd.sh -n com.vmware.tanzu -p com.vmware.tanzu -l 2 -h true -o "$GENERATOR_OUTPUT" -g true < "$SWAGGER_DEFINITIONS"
 }
 
 copyToProject() {
-  cp -Rf "$GENERATOR_OUTPUT/src/main/java" "$PROJECT_ROOT/crd-models/src/main"
+  cp -Rf "$GENERATOR_OUTPUT/src/main/java"/* "$PROJECT_ROOT/crd-models/$GENERATED_SOURCES_PATH"
+  rm -rf "$PROJECT_ROOT/crd-models/$GENERATED_SOURCES_PATH"/io/kubernetes
 }
 
 deleteExisting

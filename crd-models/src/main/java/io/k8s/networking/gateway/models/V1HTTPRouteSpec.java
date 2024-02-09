@@ -14,7 +14,6 @@
 package io.k8s.networking.gateway.models;
 
 import java.util.Objects;
-import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -24,6 +23,7 @@ import io.k8s.networking.gateway.models.V1HTTPRouteSpecParentRefsInner;
 import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInner;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -46,7 +46,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import io.kubernetes.client.openapi.JSON;
@@ -72,7 +71,6 @@ public class V1HTTPRouteSpec {
   }
 
   public V1HTTPRouteSpec hostnames(List<String> hostnames) {
-    
     this.hostnames = hostnames;
     return this;
   }
@@ -94,14 +92,12 @@ public class V1HTTPRouteSpec {
     return hostnames;
   }
 
-
   public void setHostnames(List<String> hostnames) {
     this.hostnames = hostnames;
   }
 
 
   public V1HTTPRouteSpec parentRefs(List<V1HTTPRouteSpecParentRefsInner> parentRefs) {
-    
     this.parentRefs = parentRefs;
     return this;
   }
@@ -123,14 +119,12 @@ public class V1HTTPRouteSpec {
     return parentRefs;
   }
 
-
   public void setParentRefs(List<V1HTTPRouteSpecParentRefsInner> parentRefs) {
     this.parentRefs = parentRefs;
   }
 
 
   public V1HTTPRouteSpec rules(List<V1HTTPRouteSpecRulesInner> rules) {
-    
     this.rules = rules;
     return this;
   }
@@ -151,7 +145,6 @@ public class V1HTTPRouteSpec {
   public List<V1HTTPRouteSpecRulesInner> getRules() {
     return rules;
   }
-
 
   public void setRules(List<V1HTTPRouteSpecRulesInner> rules) {
     this.rules = rules;
@@ -216,27 +209,28 @@ public class V1HTTPRouteSpec {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to V1HTTPRouteSpec
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to V1HTTPRouteSpec
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!V1HTTPRouteSpec.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!V1HTTPRouteSpec.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in V1HTTPRouteSpec is not found in the empty JSON string", V1HTTPRouteSpec.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!V1HTTPRouteSpec.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1HTTPRouteSpec` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1HTTPRouteSpec` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // ensure the optional json data is an array if present
-      if (jsonObj.get("hostnames") != null && !jsonObj.get("hostnames").isJsonArray()) {
+      if (jsonObj.get("hostnames") != null && !jsonObj.get("hostnames").isJsonNull() && !jsonObj.get("hostnames").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `hostnames` to be an array in the JSON string but got `%s`", jsonObj.get("hostnames").toString()));
       }
       if (jsonObj.get("parentRefs") != null && !jsonObj.get("parentRefs").isJsonNull()) {
@@ -249,7 +243,7 @@ public class V1HTTPRouteSpec {
 
           // validate the optional field `parentRefs` (array)
           for (int i = 0; i < jsonArrayparentRefs.size(); i++) {
-            V1HTTPRouteSpecParentRefsInner.validateJsonObject(jsonArrayparentRefs.get(i).getAsJsonObject());
+            V1HTTPRouteSpecParentRefsInner.validateJsonElement(jsonArrayparentRefs.get(i));
           };
         }
       }
@@ -263,7 +257,7 @@ public class V1HTTPRouteSpec {
 
           // validate the optional field `rules` (array)
           for (int i = 0; i < jsonArrayrules.size(); i++) {
-            V1HTTPRouteSpecRulesInner.validateJsonObject(jsonArrayrules.get(i).getAsJsonObject());
+            V1HTTPRouteSpecRulesInner.validateJsonElement(jsonArrayrules.get(i));
           };
         }
       }
@@ -289,9 +283,9 @@ public class V1HTTPRouteSpec {
 
            @Override
            public V1HTTPRouteSpec read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

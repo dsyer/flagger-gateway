@@ -14,7 +14,6 @@
 package io.k8s.networking.gateway.models;
 
 import java.util.Objects;
-import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,6 +22,7 @@ import com.google.gson.stream.JsonWriter;
 import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -45,7 +45,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import io.kubernetes.client.openapi.JSON;
@@ -87,7 +86,6 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
   }
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInner filters(List<V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner> filters) {
-    
     this.filters = filters;
     return this;
   }
@@ -109,14 +107,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
     return filters;
   }
 
-
   public void setFilters(List<V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner> filters) {
     this.filters = filters;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInner group(String group) {
-    
     this.group = group;
     return this;
   }
@@ -130,14 +126,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
     return group;
   }
 
-
   public void setGroup(String group) {
     this.group = group;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInner kind(String kind) {
-    
     this.kind = kind;
     return this;
   }
@@ -151,14 +145,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
     return kind;
   }
 
-
   public void setKind(String kind) {
     this.kind = kind;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInner name(String name) {
-    
     this.name = name;
     return this;
   }
@@ -172,14 +164,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
     return name;
   }
 
-
   public void setName(String name) {
     this.name = name;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInner namespace(String namespace) {
-    
     this.namespace = namespace;
     return this;
   }
@@ -193,14 +183,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
     return namespace;
   }
 
-
   public void setNamespace(String namespace) {
     this.namespace = namespace;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInner port(Integer port) {
-    
     this.port = port;
     return this;
   }
@@ -216,14 +204,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
     return port;
   }
 
-
   public void setPort(Integer port) {
     this.port = port;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInner weight(Integer weight) {
-    
     this.weight = weight;
     return this;
   }
@@ -238,7 +224,6 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
   public Integer getWeight() {
     return weight;
   }
-
 
   public void setWeight(Integer weight) {
     this.weight = weight;
@@ -316,32 +301,33 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to V1HTTPRouteSpecRulesInnerBackendRefsInner
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to V1HTTPRouteSpecRulesInnerBackendRefsInner
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!V1HTTPRouteSpecRulesInnerBackendRefsInner.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!V1HTTPRouteSpecRulesInnerBackendRefsInner.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in V1HTTPRouteSpecRulesInnerBackendRefsInner is not found in the empty JSON string", V1HTTPRouteSpecRulesInnerBackendRefsInner.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!V1HTTPRouteSpecRulesInnerBackendRefsInner.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1HTTPRouteSpecRulesInnerBackendRefsInner` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1HTTPRouteSpecRulesInnerBackendRefsInner` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
 
       // check to make sure all required properties/fields are present in the JSON string
       for (String requiredField : V1HTTPRouteSpecRulesInnerBackendRefsInner.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
+        if (jsonElement.getAsJsonObject().get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("filters") != null && !jsonObj.get("filters").isJsonNull()) {
         JsonArray jsonArrayfilters = jsonObj.getAsJsonArray("filters");
         if (jsonArrayfilters != null) {
@@ -352,7 +338,7 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
 
           // validate the optional field `filters` (array)
           for (int i = 0; i < jsonArrayfilters.size(); i++) {
-            V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner.validateJsonObject(jsonArrayfilters.get(i).getAsJsonObject());
+            V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner.validateJsonElement(jsonArrayfilters.get(i));
           };
         }
       }
@@ -390,9 +376,9 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInner {
 
            @Override
            public V1HTTPRouteSpecRulesInnerBackendRefsInner read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

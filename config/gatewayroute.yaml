@@ -1,0 +1,188 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: springcloudgatewayrouteconfigs.tanzu.vmware.com
+spec:
+  conversion:
+    strategy: None
+  group: tanzu.vmware.com
+  names:
+    kind: SpringCloudGatewayRouteConfig
+    listKind: SpringCloudGatewayRouteConfigList
+    plural: springcloudgatewayrouteconfigs
+    shortNames:
+    - scgrc
+    - scgrcs
+    singular: springcloudgatewayrouteconfig
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        anyOf:
+        - properties:
+            spec:
+              required:
+              - service
+        - properties:
+            spec:
+              properties:
+                routes:
+                  items:
+                    required:
+                    - uri
+        properties:
+          spec:
+            properties:
+              basicAuth:
+                properties:
+                  secret:
+                    description: The secret name containing basic auth credentials.
+                      It should contain a username and password keys.
+                    type: string
+                type: object
+              openapi:
+                properties:
+                  components:
+                    description: Holds a set of reusable objects for different aspects
+                      of the OAS, as defined by https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.1.md#componentsObject
+                    type: object
+                    x-kubernetes-preserve-unknown-fields: true
+                  generation:
+                    properties:
+                      enabled:
+                        default: true
+                        description: Mark routes to be included in the OpenApi generation.
+                        type: boolean
+                    type: object
+                  ref:
+                    description: A reference to the openapi used for this route config,
+                      for informative purposes
+                    type: string
+                type: object
+              routes:
+                description: Array of API routes.
+                items:
+                  properties:
+                    description:
+                      description: An optional description, intended to apply to all
+                        operations in this path.
+                      type: string
+                    filters:
+                      description: Route filters to allow the modification of the
+                        incoming HTTP request or outgoing HTTP response in some manner.
+                      items:
+                        type: string
+                      type: array
+                    metadata:
+                      description: Used to configure additional parameters for a route,
+                        such as http connect and response timeouts.
+                      type: object
+                      x-kubernetes-preserve-unknown-fields: true
+                    model:
+                      properties:
+                        requestBody:
+                          description: The request body as specified by https://github.com/OAI/OpenAPI-Specification/blob/3.0.1/versions/3.0.1.md#requestBodyObject
+                          type: object
+                          x-kubernetes-preserve-unknown-fields: true
+                        responses:
+                          description: The responses of an operation as specified
+                            by https://github.com/OAI/OpenAPI-Specification/blob/3.0.1/versions/3.0.1.md#responsesObject
+                          type: object
+                          x-kubernetes-preserve-unknown-fields: true
+                      type: object
+                    openapi:
+                      properties:
+                        generation:
+                          properties:
+                            enabled:
+                              description: (Optional) Override 'SpringCloudGatewayRouteConfig.spec.openapi.generation.enabled'
+                                for a specific route. It indicates if the route should
+                                be included in the OpenApi generation.
+                              type: boolean
+                          type: object
+                      type: object
+                    order:
+                      description: Route processing order, same as Spring Cloud Gateway
+                      type: integer
+                    predicates:
+                      description: Predicates to match on different attributes of
+                        the HTTP request
+                      items:
+                        type: string
+                      type: array
+                    ssoEnabled:
+                      description: Enable SSO validation
+                      type: boolean
+                    tags:
+                      description: Classification tags, will be applied to methods
+                        in the generated OpenAPI documentation
+                      items:
+                        type: string
+                      type: array
+                    title:
+                      description: An optional title, intended to apply to all operations
+                        in this path.
+                      type: string
+                    tokenRelay:
+                      description: Pass currently-authenticated user's identity token
+                        to application service
+                      type: boolean
+                    uri:
+                      description: (Optional) Full uri, will override `service.name`
+                        and `service.uri`
+                      type: string
+                  type: object
+                type: array
+              service:
+                description: Kubernetes Service to route traffic to specified `spec.routes`.
+                properties:
+                  filters:
+                    description: (Optional) Filters to be prepended to all routes.
+                    items:
+                      type: string
+                    type: array
+                  name:
+                    description: |
+                      Name of a service to route to. Takes lower precedence than `uri`. Either `name` or `uri` are required unless all routes define their own uri.
+                    type: string
+                  namespace:
+                    description: (Optional) If not set will use the RouteConfig's
+                      namespace.
+                    type: string
+                  port:
+                    description: (Optional) If not set will use one of the available
+                      service ports.
+                    type: integer
+                  predicates:
+                    description: (Optional) Predicates to be prepended to all routes.
+                    items:
+                      type: string
+                    type: array
+                  ssoEnabled:
+                    description: (Optional) Define SSO validation for all routes.
+                    type: boolean
+                  tokenRelay:
+                    description: Pass currently-authenticated user's identity token
+                      to all routes.
+                    type: boolean
+                  uri:
+                    description: |
+                      A URI to apply to all routes. Takes precedence over name. Either `name` or `uri` are required unless all routes define their own uri. Routes can override this value.
+                    type: string
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: SpringCloudGatewayRouteConfig
+    listKind: SpringCloudGatewayRouteConfigList
+    plural: springcloudgatewayrouteconfigs
+    shortNames:
+    - scgrc
+    - scgrcs
+    singular: springcloudgatewayrouteconfig
+  storedVersions:
+  - v1

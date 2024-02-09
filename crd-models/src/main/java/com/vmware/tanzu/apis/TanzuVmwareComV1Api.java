@@ -11,7 +11,7 @@
  */
 
 
-package io.k8s.networking.gateway.apis;
+package com.vmware.tanzu.apis;
 
 import io.kubernetes.client.openapi.ApiCallback;
 import io.kubernetes.client.openapi.ApiClient;
@@ -29,9 +29,9 @@ import java.io.IOException;
 
 import io.kubernetes.client.openapi.models.V1DeleteOptions;
 import io.kubernetes.client.custom.V1Patch;
+import com.vmware.tanzu.models.V1SpringCloudGatewayRouteConfig;
+import com.vmware.tanzu.models.V1SpringCloudGatewayRouteConfigList;
 import io.kubernetes.client.openapi.models.V1Status;
-import io.k8s.networking.gateway.models.V1beta1HTTPRoute;
-import io.k8s.networking.gateway.models.V1beta1HTTPRouteList;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -39,16 +39,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GatewayNetworkingV1beta1Api {
+public class TanzuVmwareComV1Api {
     private ApiClient localVarApiClient;
     private int localHostIndex;
     private String localCustomBaseUrl;
 
-    public GatewayNetworkingV1beta1Api() {
+    public TanzuVmwareComV1Api() {
         this(Configuration.getDefaultApiClient());
     }
 
-    public GatewayNetworkingV1beta1Api(ApiClient apiClient) {
+    public TanzuVmwareComV1Api(ApiClient apiClient) {
         this.localVarApiClient = apiClient;
     }
 
@@ -76,7 +76,7 @@ public class GatewayNetworkingV1beta1Api {
         this.localCustomBaseUrl = customBaseUrl;
     }
 
-    private okhttp3.Call createNamespacedHTTPRouteCall(String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createNamespacedSpringCloudGatewayRouteConfigCall(String namespace, V1SpringCloudGatewayRouteConfig body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -93,7 +93,7 @@ public class GatewayNetworkingV1beta1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/namespaces/{namespace}/httproutes"
+        String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs"
             .replace("{" + "namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -140,45 +140,45 @@ public class GatewayNetworkingV1beta1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createNamespacedHTTPRouteValidateBeforeCall(String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(String namespace, V1SpringCloudGatewayRouteConfig body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling createNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling createNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling createNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling createNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
-        return createNamespacedHTTPRouteCall(namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
+        return createNamespacedSpringCloudGatewayRouteConfigCall(namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
 
     }
 
 
-    private ApiResponse<V1beta1HTTPRoute> createNamespacedHTTPRouteWithHttpInfo(String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation) throws ApiException {
-        okhttp3.Call localVarCall = createNamespacedHTTPRouteValidateBeforeCall(namespace, body, pretty, dryRun, fieldManager, fieldValidation, null);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
+    private ApiResponse<V1SpringCloudGatewayRouteConfig> createNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(String namespace, V1SpringCloudGatewayRouteConfig body, String pretty, String dryRun, String fieldManager, String fieldValidation) throws ApiException {
+        okhttp3.Call localVarCall = createNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(namespace, body, pretty, dryRun, fieldManager, fieldValidation, null);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfig>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call createNamespacedHTTPRouteAsync(String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
+    private okhttp3.Call createNamespacedSpringCloudGatewayRouteConfigAsync(String namespace, V1SpringCloudGatewayRouteConfig body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback<V1SpringCloudGatewayRouteConfig> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createNamespacedHTTPRouteValidateBeforeCall(namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
+        okhttp3.Call localVarCall = createNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfig>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    public class APIcreateNamespacedHTTPRouteRequest {
+    public class APIcreateNamespacedSpringCloudGatewayRouteConfigRequest {
         private final String namespace;
-        private final V1beta1HTTPRoute body;
+        private final V1SpringCloudGatewayRouteConfig body;
         private String pretty;
         private String dryRun;
         private String fieldManager;
         private String fieldValidation;
 
-        private APIcreateNamespacedHTTPRouteRequest(String namespace, V1beta1HTTPRoute body) {
+        private APIcreateNamespacedSpringCloudGatewayRouteConfigRequest(String namespace, V1SpringCloudGatewayRouteConfig body) {
             this.namespace = namespace;
             this.body = body;
         }
@@ -186,9 +186,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set pretty
          * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIcreateNamespacedHTTPRouteRequest
+         * @return APIcreateNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIcreateNamespacedHTTPRouteRequest pretty(String pretty) {
+        public APIcreateNamespacedSpringCloudGatewayRouteConfigRequest pretty(String pretty) {
             this.pretty = pretty;
             return this;
         }
@@ -196,9 +196,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set dryRun
          * @param dryRun When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed (optional)
-         * @return APIcreateNamespacedHTTPRouteRequest
+         * @return APIcreateNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIcreateNamespacedHTTPRouteRequest dryRun(String dryRun) {
+        public APIcreateNamespacedSpringCloudGatewayRouteConfigRequest dryRun(String dryRun) {
             this.dryRun = dryRun;
             return this;
         }
@@ -206,9 +206,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set fieldManager
          * @param fieldManager fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. (optional)
-         * @return APIcreateNamespacedHTTPRouteRequest
+         * @return APIcreateNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIcreateNamespacedHTTPRouteRequest fieldManager(String fieldManager) {
+        public APIcreateNamespacedSpringCloudGatewayRouteConfigRequest fieldManager(String fieldManager) {
             this.fieldManager = fieldManager;
             return this;
         }
@@ -216,15 +216,15 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set fieldValidation
          * @param fieldValidation fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. (optional)
-         * @return APIcreateNamespacedHTTPRouteRequest
+         * @return APIcreateNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIcreateNamespacedHTTPRouteRequest fieldValidation(String fieldValidation) {
+        public APIcreateNamespacedSpringCloudGatewayRouteConfigRequest fieldValidation(String fieldValidation) {
             this.fieldValidation = fieldValidation;
             return this;
         }
 
         /**
-         * Build call for createNamespacedHTTPRoute
+         * Build call for createNamespacedSpringCloudGatewayRouteConfig
          * @param _callback ApiCallback API callback
          * @return Call to execute
          * @throws ApiException If fail to serialize the request body object
@@ -238,12 +238,12 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return createNamespacedHTTPRouteCall(namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
+            return createNamespacedSpringCloudGatewayRouteConfigCall(namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
         }
 
         /**
-         * Execute createNamespacedHTTPRoute request
-         * @return V1beta1HTTPRoute
+         * Execute createNamespacedSpringCloudGatewayRouteConfig request
+         * @return V1SpringCloudGatewayRouteConfig
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -254,14 +254,14 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public V1beta1HTTPRoute execute() throws ApiException {
-            ApiResponse<V1beta1HTTPRoute> localVarResp = createNamespacedHTTPRouteWithHttpInfo(namespace, body, pretty, dryRun, fieldManager, fieldValidation);
+        public V1SpringCloudGatewayRouteConfig execute() throws ApiException {
+            ApiResponse<V1SpringCloudGatewayRouteConfig> localVarResp = createNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(namespace, body, pretty, dryRun, fieldManager, fieldValidation);
             return localVarResp.getData();
         }
 
         /**
-         * Execute createNamespacedHTTPRoute request with HTTP info returned
-         * @return ApiResponse&lt;V1beta1HTTPRoute&gt;
+         * Execute createNamespacedSpringCloudGatewayRouteConfig request with HTTP info returned
+         * @return ApiResponse&lt;V1SpringCloudGatewayRouteConfig&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -272,12 +272,12 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public ApiResponse<V1beta1HTTPRoute> executeWithHttpInfo() throws ApiException {
-            return createNamespacedHTTPRouteWithHttpInfo(namespace, body, pretty, dryRun, fieldManager, fieldValidation);
+        public ApiResponse<V1SpringCloudGatewayRouteConfig> executeWithHttpInfo() throws ApiException {
+            return createNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(namespace, body, pretty, dryRun, fieldManager, fieldValidation);
         }
 
         /**
-         * Execute createNamespacedHTTPRoute request (asynchronously)
+         * Execute createNamespacedSpringCloudGatewayRouteConfig request (asynchronously)
          * @param _callback The callback to be executed when the API call finishes
          * @return The request call
          * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -290,17 +290,17 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public okhttp3.Call executeAsync(final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
-            return createNamespacedHTTPRouteAsync(namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
+        public okhttp3.Call executeAsync(final ApiCallback<V1SpringCloudGatewayRouteConfig> _callback) throws ApiException {
+            return createNamespacedSpringCloudGatewayRouteConfigAsync(namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
         }
     }
 
     /**
      * 
-     * create a HTTPRoute
+     * create a SpringCloudGatewayRouteConfig
      * @param namespace object name and auth scope, such as for teams and projects (required)
      * @param body  (required)
-     * @return APIcreateNamespacedHTTPRouteRequest
+     * @return APIcreateNamespacedSpringCloudGatewayRouteConfigRequest
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
@@ -310,10 +310,10 @@ public class GatewayNetworkingV1beta1Api {
         <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
      </table>
      */
-    public APIcreateNamespacedHTTPRouteRequest createNamespacedHTTPRoute(String namespace, V1beta1HTTPRoute body) {
-        return new APIcreateNamespacedHTTPRouteRequest(namespace, body);
+    public APIcreateNamespacedSpringCloudGatewayRouteConfigRequest createNamespacedSpringCloudGatewayRouteConfig(String namespace, V1SpringCloudGatewayRouteConfig body) {
+        return new APIcreateNamespacedSpringCloudGatewayRouteConfigRequest(namespace, body);
     }
-    private okhttp3.Call deleteCollectionNamespacedHTTPRouteCall(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteCollectionNamespacedSpringCloudGatewayRouteConfigCall(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -330,7 +330,7 @@ public class GatewayNetworkingV1beta1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/namespaces/{namespace}/httproutes"
+        String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs"
             .replace("{" + "namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -396,32 +396,32 @@ public class GatewayNetworkingV1beta1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteCollectionNamespacedHTTPRouteValidateBeforeCall(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteCollectionNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling deleteCollectionNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling deleteCollectionNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
-        return deleteCollectionNamespacedHTTPRouteCall(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, _callback);
+        return deleteCollectionNamespacedSpringCloudGatewayRouteConfigCall(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, _callback);
 
     }
 
 
-    private ApiResponse<V1Status> deleteCollectionNamespacedHTTPRouteWithHttpInfo(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds) throws ApiException {
-        okhttp3.Call localVarCall = deleteCollectionNamespacedHTTPRouteValidateBeforeCall(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, null);
+    private ApiResponse<V1Status> deleteCollectionNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds) throws ApiException {
+        okhttp3.Call localVarCall = deleteCollectionNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, null);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call deleteCollectionNamespacedHTTPRouteAsync(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, final ApiCallback<V1Status> _callback) throws ApiException {
+    private okhttp3.Call deleteCollectionNamespacedSpringCloudGatewayRouteConfigAsync(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, final ApiCallback<V1Status> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteCollectionNamespacedHTTPRouteValidateBeforeCall(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, _callback);
+        okhttp3.Call localVarCall = deleteCollectionNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, _callback);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    public class APIdeleteCollectionNamespacedHTTPRouteRequest {
+    public class APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest {
         private final String namespace;
         private String pretty;
         private String _continue;
@@ -433,16 +433,16 @@ public class GatewayNetworkingV1beta1Api {
         private Boolean sendInitialEvents;
         private Integer timeoutSeconds;
 
-        private APIdeleteCollectionNamespacedHTTPRouteRequest(String namespace) {
+        private APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest(String namespace) {
             this.namespace = namespace;
         }
 
         /**
          * Set pretty
          * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIdeleteCollectionNamespacedHTTPRouteRequest
+         * @return APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteCollectionNamespacedHTTPRouteRequest pretty(String pretty) {
+        public APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest pretty(String pretty) {
             this.pretty = pretty;
             return this;
         }
@@ -450,9 +450,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set _continue
          * @param _continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. (optional)
-         * @return APIdeleteCollectionNamespacedHTTPRouteRequest
+         * @return APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteCollectionNamespacedHTTPRouteRequest _continue(String _continue) {
+        public APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest _continue(String _continue) {
             this._continue = _continue;
             return this;
         }
@@ -460,9 +460,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set fieldSelector
          * @param fieldSelector A selector to restrict the list of returned objects by their fields. Defaults to everything. (optional)
-         * @return APIdeleteCollectionNamespacedHTTPRouteRequest
+         * @return APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteCollectionNamespacedHTTPRouteRequest fieldSelector(String fieldSelector) {
+        public APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest fieldSelector(String fieldSelector) {
             this.fieldSelector = fieldSelector;
             return this;
         }
@@ -470,9 +470,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set labelSelector
          * @param labelSelector A selector to restrict the list of returned objects by their labels. Defaults to everything. (optional)
-         * @return APIdeleteCollectionNamespacedHTTPRouteRequest
+         * @return APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteCollectionNamespacedHTTPRouteRequest labelSelector(String labelSelector) {
+        public APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest labelSelector(String labelSelector) {
             this.labelSelector = labelSelector;
             return this;
         }
@@ -480,9 +480,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set limit
          * @param limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned. (optional)
-         * @return APIdeleteCollectionNamespacedHTTPRouteRequest
+         * @return APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteCollectionNamespacedHTTPRouteRequest limit(Integer limit) {
+        public APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest limit(Integer limit) {
             this.limit = limit;
             return this;
         }
@@ -490,9 +490,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set resourceVersion
          * @param resourceVersion resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset (optional)
-         * @return APIdeleteCollectionNamespacedHTTPRouteRequest
+         * @return APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteCollectionNamespacedHTTPRouteRequest resourceVersion(String resourceVersion) {
+        public APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest resourceVersion(String resourceVersion) {
             this.resourceVersion = resourceVersion;
             return this;
         }
@@ -500,9 +500,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set resourceVersionMatch
          * @param resourceVersionMatch resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset (optional)
-         * @return APIdeleteCollectionNamespacedHTTPRouteRequest
+         * @return APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteCollectionNamespacedHTTPRouteRequest resourceVersionMatch(String resourceVersionMatch) {
+        public APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest resourceVersionMatch(String resourceVersionMatch) {
             this.resourceVersionMatch = resourceVersionMatch;
             return this;
         }
@@ -510,9 +510,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set sendInitialEvents
          * @param sendInitialEvents &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise. (optional)
-         * @return APIdeleteCollectionNamespacedHTTPRouteRequest
+         * @return APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteCollectionNamespacedHTTPRouteRequest sendInitialEvents(Boolean sendInitialEvents) {
+        public APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest sendInitialEvents(Boolean sendInitialEvents) {
             this.sendInitialEvents = sendInitialEvents;
             return this;
         }
@@ -520,15 +520,15 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set timeoutSeconds
          * @param timeoutSeconds Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity. (optional)
-         * @return APIdeleteCollectionNamespacedHTTPRouteRequest
+         * @return APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteCollectionNamespacedHTTPRouteRequest timeoutSeconds(Integer timeoutSeconds) {
+        public APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest timeoutSeconds(Integer timeoutSeconds) {
             this.timeoutSeconds = timeoutSeconds;
             return this;
         }
 
         /**
-         * Build call for deleteCollectionNamespacedHTTPRoute
+         * Build call for deleteCollectionNamespacedSpringCloudGatewayRouteConfig
          * @param _callback ApiCallback API callback
          * @return Call to execute
          * @throws ApiException If fail to serialize the request body object
@@ -540,11 +540,11 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return deleteCollectionNamespacedHTTPRouteCall(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, _callback);
+            return deleteCollectionNamespacedSpringCloudGatewayRouteConfigCall(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, _callback);
         }
 
         /**
-         * Execute deleteCollectionNamespacedHTTPRoute request
+         * Execute deleteCollectionNamespacedSpringCloudGatewayRouteConfig request
          * @return V1Status
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
@@ -555,12 +555,12 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public V1Status execute() throws ApiException {
-            ApiResponse<V1Status> localVarResp = deleteCollectionNamespacedHTTPRouteWithHttpInfo(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds);
+            ApiResponse<V1Status> localVarResp = deleteCollectionNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds);
             return localVarResp.getData();
         }
 
         /**
-         * Execute deleteCollectionNamespacedHTTPRoute request with HTTP info returned
+         * Execute deleteCollectionNamespacedSpringCloudGatewayRouteConfig request with HTTP info returned
          * @return ApiResponse&lt;V1Status&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
@@ -571,11 +571,11 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public ApiResponse<V1Status> executeWithHttpInfo() throws ApiException {
-            return deleteCollectionNamespacedHTTPRouteWithHttpInfo(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds);
+            return deleteCollectionNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds);
         }
 
         /**
-         * Execute deleteCollectionNamespacedHTTPRoute request (asynchronously)
+         * Execute deleteCollectionNamespacedSpringCloudGatewayRouteConfig request (asynchronously)
          * @param _callback The callback to be executed when the API call finishes
          * @return The request call
          * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -587,15 +587,15 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<V1Status> _callback) throws ApiException {
-            return deleteCollectionNamespacedHTTPRouteAsync(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, _callback);
+            return deleteCollectionNamespacedSpringCloudGatewayRouteConfigAsync(namespace, pretty, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, _callback);
         }
     }
 
     /**
      * 
-     * delete collection of HTTPRoute
+     * delete collection of SpringCloudGatewayRouteConfig
      * @param namespace object name and auth scope, such as for teams and projects (required)
-     * @return APIdeleteCollectionNamespacedHTTPRouteRequest
+     * @return APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
@@ -603,10 +603,10 @@ public class GatewayNetworkingV1beta1Api {
         <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
      </table>
      */
-    public APIdeleteCollectionNamespacedHTTPRouteRequest deleteCollectionNamespacedHTTPRoute(String namespace) {
-        return new APIdeleteCollectionNamespacedHTTPRouteRequest(namespace);
+    public APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest deleteCollectionNamespacedSpringCloudGatewayRouteConfig(String namespace) {
+        return new APIdeleteCollectionNamespacedSpringCloudGatewayRouteConfigRequest(namespace);
     }
-    private okhttp3.Call deleteNamespacedHTTPRouteCall(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteNamespacedSpringCloudGatewayRouteConfigCall(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -623,7 +623,7 @@ public class GatewayNetworkingV1beta1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/namespaces/{namespace}/httproutes/{name}"
+        String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs/{name}"
             .replace("{" + "name" + "}", localVarApiClient.escapeString(name.toString()))
             .replace("{" + "namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
 
@@ -675,37 +675,37 @@ public class GatewayNetworkingV1beta1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteNamespacedHTTPRouteValidateBeforeCall(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'name' is set
         if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling deleteNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'name' when calling deleteNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling deleteNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling deleteNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
-        return deleteNamespacedHTTPRouteCall(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body, _callback);
+        return deleteNamespacedSpringCloudGatewayRouteConfigCall(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body, _callback);
 
     }
 
 
-    private ApiResponse<V1Status> deleteNamespacedHTTPRouteWithHttpInfo(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body) throws ApiException {
-        okhttp3.Call localVarCall = deleteNamespacedHTTPRouteValidateBeforeCall(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body, null);
+    private ApiResponse<V1Status> deleteNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body) throws ApiException {
+        okhttp3.Call localVarCall = deleteNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body, null);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call deleteNamespacedHTTPRouteAsync(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body, final ApiCallback<V1Status> _callback) throws ApiException {
+    private okhttp3.Call deleteNamespacedSpringCloudGatewayRouteConfigAsync(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body, final ApiCallback<V1Status> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteNamespacedHTTPRouteValidateBeforeCall(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body, _callback);
+        okhttp3.Call localVarCall = deleteNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body, _callback);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    public class APIdeleteNamespacedHTTPRouteRequest {
+    public class APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest {
         private final String name;
         private final String namespace;
         private String pretty;
@@ -715,7 +715,7 @@ public class GatewayNetworkingV1beta1Api {
         private String propagationPolicy;
         private V1DeleteOptions body;
 
-        private APIdeleteNamespacedHTTPRouteRequest(String name, String namespace) {
+        private APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest(String name, String namespace) {
             this.name = name;
             this.namespace = namespace;
         }
@@ -723,9 +723,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set pretty
          * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIdeleteNamespacedHTTPRouteRequest
+         * @return APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteNamespacedHTTPRouteRequest pretty(String pretty) {
+        public APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest pretty(String pretty) {
             this.pretty = pretty;
             return this;
         }
@@ -733,9 +733,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set dryRun
          * @param dryRun When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed (optional)
-         * @return APIdeleteNamespacedHTTPRouteRequest
+         * @return APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteNamespacedHTTPRouteRequest dryRun(String dryRun) {
+        public APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest dryRun(String dryRun) {
             this.dryRun = dryRun;
             return this;
         }
@@ -743,9 +743,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set gracePeriodSeconds
          * @param gracePeriodSeconds The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately. (optional)
-         * @return APIdeleteNamespacedHTTPRouteRequest
+         * @return APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteNamespacedHTTPRouteRequest gracePeriodSeconds(Integer gracePeriodSeconds) {
+        public APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest gracePeriodSeconds(Integer gracePeriodSeconds) {
             this.gracePeriodSeconds = gracePeriodSeconds;
             return this;
         }
@@ -753,9 +753,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set orphanDependents
          * @param orphanDependents Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the \&quot;orphan\&quot; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both. (optional)
-         * @return APIdeleteNamespacedHTTPRouteRequest
+         * @return APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteNamespacedHTTPRouteRequest orphanDependents(Boolean orphanDependents) {
+        public APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest orphanDependents(Boolean orphanDependents) {
             this.orphanDependents = orphanDependents;
             return this;
         }
@@ -763,9 +763,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set propagationPolicy
          * @param propagationPolicy Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground. (optional)
-         * @return APIdeleteNamespacedHTTPRouteRequest
+         * @return APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteNamespacedHTTPRouteRequest propagationPolicy(String propagationPolicy) {
+        public APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest propagationPolicy(String propagationPolicy) {
             this.propagationPolicy = propagationPolicy;
             return this;
         }
@@ -773,15 +773,15 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set body
          * @param body  (optional)
-         * @return APIdeleteNamespacedHTTPRouteRequest
+         * @return APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIdeleteNamespacedHTTPRouteRequest body(V1DeleteOptions body) {
+        public APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest body(V1DeleteOptions body) {
             this.body = body;
             return this;
         }
 
         /**
-         * Build call for deleteNamespacedHTTPRoute
+         * Build call for deleteNamespacedSpringCloudGatewayRouteConfig
          * @param _callback ApiCallback API callback
          * @return Call to execute
          * @throws ApiException If fail to serialize the request body object
@@ -794,11 +794,11 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return deleteNamespacedHTTPRouteCall(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body, _callback);
+            return deleteNamespacedSpringCloudGatewayRouteConfigCall(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body, _callback);
         }
 
         /**
-         * Execute deleteNamespacedHTTPRoute request
+         * Execute deleteNamespacedSpringCloudGatewayRouteConfig request
          * @return V1Status
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
@@ -810,12 +810,12 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public V1Status execute() throws ApiException {
-            ApiResponse<V1Status> localVarResp = deleteNamespacedHTTPRouteWithHttpInfo(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body);
+            ApiResponse<V1Status> localVarResp = deleteNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body);
             return localVarResp.getData();
         }
 
         /**
-         * Execute deleteNamespacedHTTPRoute request with HTTP info returned
+         * Execute deleteNamespacedSpringCloudGatewayRouteConfig request with HTTP info returned
          * @return ApiResponse&lt;V1Status&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
@@ -827,11 +827,11 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public ApiResponse<V1Status> executeWithHttpInfo() throws ApiException {
-            return deleteNamespacedHTTPRouteWithHttpInfo(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body);
+            return deleteNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body);
         }
 
         /**
-         * Execute deleteNamespacedHTTPRoute request (asynchronously)
+         * Execute deleteNamespacedSpringCloudGatewayRouteConfig request (asynchronously)
          * @param _callback The callback to be executed when the API call finishes
          * @return The request call
          * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -844,16 +844,16 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public okhttp3.Call executeAsync(final ApiCallback<V1Status> _callback) throws ApiException {
-            return deleteNamespacedHTTPRouteAsync(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body, _callback);
+            return deleteNamespacedSpringCloudGatewayRouteConfigAsync(name, namespace, pretty, dryRun, gracePeriodSeconds, orphanDependents, propagationPolicy, body, _callback);
         }
     }
 
     /**
      * 
-     * delete a HTTPRoute
-     * @param name name of the HTTPRoute (required)
+     * delete a SpringCloudGatewayRouteConfig
+     * @param name name of the SpringCloudGatewayRouteConfig (required)
      * @param namespace object name and auth scope, such as for teams and projects (required)
-     * @return APIdeleteNamespacedHTTPRouteRequest
+     * @return APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
@@ -862,10 +862,10 @@ public class GatewayNetworkingV1beta1Api {
         <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
      </table>
      */
-    public APIdeleteNamespacedHTTPRouteRequest deleteNamespacedHTTPRoute(String name, String namespace) {
-        return new APIdeleteNamespacedHTTPRouteRequest(name, namespace);
+    public APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest deleteNamespacedSpringCloudGatewayRouteConfig(String name, String namespace) {
+        return new APIdeleteNamespacedSpringCloudGatewayRouteConfigRequest(name, namespace);
     }
-    private okhttp3.Call listHTTPRouteForAllNamespacesCall(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listNamespacedSpringCloudGatewayRouteConfigCall(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -882,321 +882,7 @@ public class GatewayNetworkingV1beta1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/httproutes";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (allowWatchBookmarks != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("allowWatchBookmarks", allowWatchBookmarks));
-        }
-
-        if (_continue != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("continue", _continue));
-        }
-
-        if (fieldSelector != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("fieldSelector", fieldSelector));
-        }
-
-        if (labelSelector != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("labelSelector", labelSelector));
-        }
-
-        if (limit != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("limit", limit));
-        }
-
-        if (pretty != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pretty", pretty));
-        }
-
-        if (resourceVersion != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("resourceVersion", resourceVersion));
-        }
-
-        if (resourceVersionMatch != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("resourceVersionMatch", resourceVersionMatch));
-        }
-
-        if (sendInitialEvents != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("sendInitialEvents", sendInitialEvents));
-        }
-
-        if (timeoutSeconds != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("timeoutSeconds", timeoutSeconds));
-        }
-
-        if (watch != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("watch", watch));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "application/yaml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "BearerToken" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call listHTTPRouteForAllNamespacesValidateBeforeCall(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
-        return listHTTPRouteForAllNamespacesCall(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
-
-    }
-
-
-    private ApiResponse<V1beta1HTTPRouteList> listHTTPRouteForAllNamespacesWithHttpInfo(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch) throws ApiException {
-        okhttp3.Call localVarCall = listHTTPRouteForAllNamespacesValidateBeforeCall(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, null);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRouteList>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    private okhttp3.Call listHTTPRouteForAllNamespacesAsync(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback<V1beta1HTTPRouteList> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = listHTTPRouteForAllNamespacesValidateBeforeCall(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRouteList>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-
-    public class APIlistHTTPRouteForAllNamespacesRequest {
-        private Boolean allowWatchBookmarks;
-        private String _continue;
-        private String fieldSelector;
-        private String labelSelector;
-        private Integer limit;
-        private String pretty;
-        private String resourceVersion;
-        private String resourceVersionMatch;
-        private Boolean sendInitialEvents;
-        private Integer timeoutSeconds;
-        private Boolean watch;
-
-        private APIlistHTTPRouteForAllNamespacesRequest() {
-        }
-
-        /**
-         * Set allowWatchBookmarks
-         * @param allowWatchBookmarks allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest allowWatchBookmarks(Boolean allowWatchBookmarks) {
-            this.allowWatchBookmarks = allowWatchBookmarks;
-            return this;
-        }
-
-        /**
-         * Set _continue
-         * @param _continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest _continue(String _continue) {
-            this._continue = _continue;
-            return this;
-        }
-
-        /**
-         * Set fieldSelector
-         * @param fieldSelector A selector to restrict the list of returned objects by their fields. Defaults to everything. (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest fieldSelector(String fieldSelector) {
-            this.fieldSelector = fieldSelector;
-            return this;
-        }
-
-        /**
-         * Set labelSelector
-         * @param labelSelector A selector to restrict the list of returned objects by their labels. Defaults to everything. (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest labelSelector(String labelSelector) {
-            this.labelSelector = labelSelector;
-            return this;
-        }
-
-        /**
-         * Set limit
-         * @param limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned. (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest limit(Integer limit) {
-            this.limit = limit;
-            return this;
-        }
-
-        /**
-         * Set pretty
-         * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest pretty(String pretty) {
-            this.pretty = pretty;
-            return this;
-        }
-
-        /**
-         * Set resourceVersion
-         * @param resourceVersion resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest resourceVersion(String resourceVersion) {
-            this.resourceVersion = resourceVersion;
-            return this;
-        }
-
-        /**
-         * Set resourceVersionMatch
-         * @param resourceVersionMatch resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest resourceVersionMatch(String resourceVersionMatch) {
-            this.resourceVersionMatch = resourceVersionMatch;
-            return this;
-        }
-
-        /**
-         * Set sendInitialEvents
-         * @param sendInitialEvents &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise. (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest sendInitialEvents(Boolean sendInitialEvents) {
-            this.sendInitialEvents = sendInitialEvents;
-            return this;
-        }
-
-        /**
-         * Set timeoutSeconds
-         * @param timeoutSeconds Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity. (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest timeoutSeconds(Integer timeoutSeconds) {
-            this.timeoutSeconds = timeoutSeconds;
-            return this;
-        }
-
-        /**
-         * Set watch
-         * @param watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion. (optional)
-         * @return APIlistHTTPRouteForAllNamespacesRequest
-         */
-        public APIlistHTTPRouteForAllNamespacesRequest watch(Boolean watch) {
-            this.watch = watch;
-            return this;
-        }
-
-        /**
-         * Build call for listHTTPRouteForAllNamespaces
-         * @param _callback ApiCallback API callback
-         * @return Call to execute
-         * @throws ApiException If fail to serialize the request body object
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return listHTTPRouteForAllNamespacesCall(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
-        }
-
-        /**
-         * Execute listHTTPRouteForAllNamespaces request
-         * @return V1beta1HTTPRouteList
-         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public V1beta1HTTPRouteList execute() throws ApiException {
-            ApiResponse<V1beta1HTTPRouteList> localVarResp = listHTTPRouteForAllNamespacesWithHttpInfo(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch);
-            return localVarResp.getData();
-        }
-
-        /**
-         * Execute listHTTPRouteForAllNamespaces request with HTTP info returned
-         * @return ApiResponse&lt;V1beta1HTTPRouteList&gt;
-         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public ApiResponse<V1beta1HTTPRouteList> executeWithHttpInfo() throws ApiException {
-            return listHTTPRouteForAllNamespacesWithHttpInfo(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch);
-        }
-
-        /**
-         * Execute listHTTPRouteForAllNamespaces request (asynchronously)
-         * @param _callback The callback to be executed when the API call finishes
-         * @return The request call
-         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public okhttp3.Call executeAsync(final ApiCallback<V1beta1HTTPRouteList> _callback) throws ApiException {
-            return listHTTPRouteForAllNamespacesAsync(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
-        }
-    }
-
-    /**
-     * 
-     * list objects of kind HTTPRoute
-     * @return APIlistHTTPRouteForAllNamespacesRequest
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-     </table>
-     */
-    public APIlistHTTPRouteForAllNamespacesRequest listHTTPRouteForAllNamespaces() {
-        return new APIlistHTTPRouteForAllNamespacesRequest();
-    }
-    private okhttp3.Call listNamespacedHTTPRouteCall(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/namespaces/{namespace}/httproutes"
+        String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs"
             .replace("{" + "namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1270,32 +956,32 @@ public class GatewayNetworkingV1beta1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call listNamespacedHTTPRouteValidateBeforeCall(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling listNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling listNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
-        return listNamespacedHTTPRouteCall(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
+        return listNamespacedSpringCloudGatewayRouteConfigCall(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
 
     }
 
 
-    private ApiResponse<V1beta1HTTPRouteList> listNamespacedHTTPRouteWithHttpInfo(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch) throws ApiException {
-        okhttp3.Call localVarCall = listNamespacedHTTPRouteValidateBeforeCall(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, null);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRouteList>(){}.getType();
+    private ApiResponse<V1SpringCloudGatewayRouteConfigList> listNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch) throws ApiException {
+        okhttp3.Call localVarCall = listNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, null);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfigList>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call listNamespacedHTTPRouteAsync(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback<V1beta1HTTPRouteList> _callback) throws ApiException {
+    private okhttp3.Call listNamespacedSpringCloudGatewayRouteConfigAsync(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback<V1SpringCloudGatewayRouteConfigList> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = listNamespacedHTTPRouteValidateBeforeCall(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRouteList>(){}.getType();
+        okhttp3.Call localVarCall = listNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfigList>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    public class APIlistNamespacedHTTPRouteRequest {
+    public class APIlistNamespacedSpringCloudGatewayRouteConfigRequest {
         private final String namespace;
         private String pretty;
         private Boolean allowWatchBookmarks;
@@ -1309,16 +995,16 @@ public class GatewayNetworkingV1beta1Api {
         private Integer timeoutSeconds;
         private Boolean watch;
 
-        private APIlistNamespacedHTTPRouteRequest(String namespace) {
+        private APIlistNamespacedSpringCloudGatewayRouteConfigRequest(String namespace) {
             this.namespace = namespace;
         }
 
         /**
          * Set pretty
          * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest pretty(String pretty) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest pretty(String pretty) {
             this.pretty = pretty;
             return this;
         }
@@ -1326,9 +1012,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set allowWatchBookmarks
          * @param allowWatchBookmarks allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest allowWatchBookmarks(Boolean allowWatchBookmarks) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest allowWatchBookmarks(Boolean allowWatchBookmarks) {
             this.allowWatchBookmarks = allowWatchBookmarks;
             return this;
         }
@@ -1336,9 +1022,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set _continue
          * @param _continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest _continue(String _continue) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest _continue(String _continue) {
             this._continue = _continue;
             return this;
         }
@@ -1346,9 +1032,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set fieldSelector
          * @param fieldSelector A selector to restrict the list of returned objects by their fields. Defaults to everything. (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest fieldSelector(String fieldSelector) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest fieldSelector(String fieldSelector) {
             this.fieldSelector = fieldSelector;
             return this;
         }
@@ -1356,9 +1042,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set labelSelector
          * @param labelSelector A selector to restrict the list of returned objects by their labels. Defaults to everything. (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest labelSelector(String labelSelector) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest labelSelector(String labelSelector) {
             this.labelSelector = labelSelector;
             return this;
         }
@@ -1366,9 +1052,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set limit
          * @param limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned. (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest limit(Integer limit) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest limit(Integer limit) {
             this.limit = limit;
             return this;
         }
@@ -1376,9 +1062,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set resourceVersion
          * @param resourceVersion resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest resourceVersion(String resourceVersion) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest resourceVersion(String resourceVersion) {
             this.resourceVersion = resourceVersion;
             return this;
         }
@@ -1386,9 +1072,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set resourceVersionMatch
          * @param resourceVersionMatch resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest resourceVersionMatch(String resourceVersionMatch) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest resourceVersionMatch(String resourceVersionMatch) {
             this.resourceVersionMatch = resourceVersionMatch;
             return this;
         }
@@ -1396,9 +1082,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set sendInitialEvents
          * @param sendInitialEvents &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise. (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest sendInitialEvents(Boolean sendInitialEvents) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest sendInitialEvents(Boolean sendInitialEvents) {
             this.sendInitialEvents = sendInitialEvents;
             return this;
         }
@@ -1406,9 +1092,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set timeoutSeconds
          * @param timeoutSeconds Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity. (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest timeoutSeconds(Integer timeoutSeconds) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest timeoutSeconds(Integer timeoutSeconds) {
             this.timeoutSeconds = timeoutSeconds;
             return this;
         }
@@ -1416,15 +1102,15 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set watch
          * @param watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion. (optional)
-         * @return APIlistNamespacedHTTPRouteRequest
+         * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIlistNamespacedHTTPRouteRequest watch(Boolean watch) {
+        public APIlistNamespacedSpringCloudGatewayRouteConfigRequest watch(Boolean watch) {
             this.watch = watch;
             return this;
         }
 
         /**
-         * Build call for listNamespacedHTTPRoute
+         * Build call for listNamespacedSpringCloudGatewayRouteConfig
          * @param _callback ApiCallback API callback
          * @return Call to execute
          * @throws ApiException If fail to serialize the request body object
@@ -1436,12 +1122,12 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return listNamespacedHTTPRouteCall(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
+            return listNamespacedSpringCloudGatewayRouteConfigCall(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
         }
 
         /**
-         * Execute listNamespacedHTTPRoute request
-         * @return V1beta1HTTPRouteList
+         * Execute listNamespacedSpringCloudGatewayRouteConfig request
+         * @return V1SpringCloudGatewayRouteConfigList
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -1450,14 +1136,14 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public V1beta1HTTPRouteList execute() throws ApiException {
-            ApiResponse<V1beta1HTTPRouteList> localVarResp = listNamespacedHTTPRouteWithHttpInfo(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch);
+        public V1SpringCloudGatewayRouteConfigList execute() throws ApiException {
+            ApiResponse<V1SpringCloudGatewayRouteConfigList> localVarResp = listNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch);
             return localVarResp.getData();
         }
 
         /**
-         * Execute listNamespacedHTTPRoute request with HTTP info returned
-         * @return ApiResponse&lt;V1beta1HTTPRouteList&gt;
+         * Execute listNamespacedSpringCloudGatewayRouteConfig request with HTTP info returned
+         * @return ApiResponse&lt;V1SpringCloudGatewayRouteConfigList&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -1466,12 +1152,12 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public ApiResponse<V1beta1HTTPRouteList> executeWithHttpInfo() throws ApiException {
-            return listNamespacedHTTPRouteWithHttpInfo(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch);
+        public ApiResponse<V1SpringCloudGatewayRouteConfigList> executeWithHttpInfo() throws ApiException {
+            return listNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch);
         }
 
         /**
-         * Execute listNamespacedHTTPRoute request (asynchronously)
+         * Execute listNamespacedSpringCloudGatewayRouteConfig request (asynchronously)
          * @param _callback The callback to be executed when the API call finishes
          * @return The request call
          * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1482,16 +1168,16 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public okhttp3.Call executeAsync(final ApiCallback<V1beta1HTTPRouteList> _callback) throws ApiException {
-            return listNamespacedHTTPRouteAsync(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
+        public okhttp3.Call executeAsync(final ApiCallback<V1SpringCloudGatewayRouteConfigList> _callback) throws ApiException {
+            return listNamespacedSpringCloudGatewayRouteConfigAsync(namespace, pretty, allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
         }
     }
 
     /**
      * 
-     * list objects of kind HTTPRoute
+     * list objects of kind SpringCloudGatewayRouteConfig
      * @param namespace object name and auth scope, such as for teams and projects (required)
-     * @return APIlistNamespacedHTTPRouteRequest
+     * @return APIlistNamespacedSpringCloudGatewayRouteConfigRequest
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
@@ -1499,10 +1185,324 @@ public class GatewayNetworkingV1beta1Api {
         <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
      </table>
      */
-    public APIlistNamespacedHTTPRouteRequest listNamespacedHTTPRoute(String namespace) {
-        return new APIlistNamespacedHTTPRouteRequest(namespace);
+    public APIlistNamespacedSpringCloudGatewayRouteConfigRequest listNamespacedSpringCloudGatewayRouteConfig(String namespace) {
+        return new APIlistNamespacedSpringCloudGatewayRouteConfigRequest(namespace);
     }
-    private okhttp3.Call patchNamespacedHTTPRouteCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call listSpringCloudGatewayRouteConfigForAllNamespacesCall(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/apis/tanzu.vmware.com/v1/springcloudgatewayrouteconfigs";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (allowWatchBookmarks != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("allowWatchBookmarks", allowWatchBookmarks));
+        }
+
+        if (_continue != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("continue", _continue));
+        }
+
+        if (fieldSelector != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("fieldSelector", fieldSelector));
+        }
+
+        if (labelSelector != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("labelSelector", labelSelector));
+        }
+
+        if (limit != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("limit", limit));
+        }
+
+        if (pretty != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pretty", pretty));
+        }
+
+        if (resourceVersion != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("resourceVersion", resourceVersion));
+        }
+
+        if (resourceVersionMatch != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("resourceVersionMatch", resourceVersionMatch));
+        }
+
+        if (sendInitialEvents != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("sendInitialEvents", sendInitialEvents));
+        }
+
+        if (timeoutSeconds != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("timeoutSeconds", timeoutSeconds));
+        }
+
+        if (watch != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("watch", watch));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json",
+            "application/yaml"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "BearerToken" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call listSpringCloudGatewayRouteConfigForAllNamespacesValidateBeforeCall(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
+        return listSpringCloudGatewayRouteConfigForAllNamespacesCall(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
+
+    }
+
+
+    private ApiResponse<V1SpringCloudGatewayRouteConfigList> listSpringCloudGatewayRouteConfigForAllNamespacesWithHttpInfo(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch) throws ApiException {
+        okhttp3.Call localVarCall = listSpringCloudGatewayRouteConfigForAllNamespacesValidateBeforeCall(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, null);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfigList>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    private okhttp3.Call listSpringCloudGatewayRouteConfigForAllNamespacesAsync(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Boolean sendInitialEvents, Integer timeoutSeconds, Boolean watch, final ApiCallback<V1SpringCloudGatewayRouteConfigList> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = listSpringCloudGatewayRouteConfigForAllNamespacesValidateBeforeCall(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfigList>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+
+    public class APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest {
+        private Boolean allowWatchBookmarks;
+        private String _continue;
+        private String fieldSelector;
+        private String labelSelector;
+        private Integer limit;
+        private String pretty;
+        private String resourceVersion;
+        private String resourceVersionMatch;
+        private Boolean sendInitialEvents;
+        private Integer timeoutSeconds;
+        private Boolean watch;
+
+        private APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest() {
+        }
+
+        /**
+         * Set allowWatchBookmarks
+         * @param allowWatchBookmarks allowWatchBookmarks requests watch events with type \&quot;BOOKMARK\&quot;. Servers that do not implement bookmarks may ignore this flag and bookmarks are sent at the server&#39;s discretion. Clients should not assume bookmarks are returned at any specific interval, nor may they assume the server will send any BOOKMARK event during a session. If this is not a watch, this field is ignored. (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest allowWatchBookmarks(Boolean allowWatchBookmarks) {
+            this.allowWatchBookmarks = allowWatchBookmarks;
+            return this;
+        }
+
+        /**
+         * Set _continue
+         * @param _continue The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the \&quot;next key\&quot;.  This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications. (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest _continue(String _continue) {
+            this._continue = _continue;
+            return this;
+        }
+
+        /**
+         * Set fieldSelector
+         * @param fieldSelector A selector to restrict the list of returned objects by their fields. Defaults to everything. (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest fieldSelector(String fieldSelector) {
+            this.fieldSelector = fieldSelector;
+            return this;
+        }
+
+        /**
+         * Set labelSelector
+         * @param labelSelector A selector to restrict the list of returned objects by their labels. Defaults to everything. (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest labelSelector(String labelSelector) {
+            this.labelSelector = labelSelector;
+            return this;
+        }
+
+        /**
+         * Set limit
+         * @param limit limit is a maximum number of responses to return for a list call. If more items exist, the server will set the &#x60;continue&#x60; field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.  The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned. (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest limit(Integer limit) {
+            this.limit = limit;
+            return this;
+        }
+
+        /**
+         * Set pretty
+         * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest pretty(String pretty) {
+            this.pretty = pretty;
+            return this;
+        }
+
+        /**
+         * Set resourceVersion
+         * @param resourceVersion resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest resourceVersion(String resourceVersion) {
+            this.resourceVersion = resourceVersion;
+            return this;
+        }
+
+        /**
+         * Set resourceVersionMatch
+         * @param resourceVersionMatch resourceVersionMatch determines how resourceVersion is applied to list calls. It is highly recommended that resourceVersionMatch be set for list calls where resourceVersion is set See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest resourceVersionMatch(String resourceVersionMatch) {
+            this.resourceVersionMatch = resourceVersionMatch;
+            return this;
+        }
+
+        /**
+         * Set sendInitialEvents
+         * @param sendInitialEvents &#x60;sendInitialEvents&#x3D;true&#x60; may be set together with &#x60;watch&#x3D;true&#x60;. In that case, the watch stream will begin with synthetic events to produce the current state of objects in the collection. Once all such events have been sent, a synthetic \&quot;Bookmark\&quot; event  will be sent. The bookmark will report the ResourceVersion (RV) corresponding to the set of objects, and be marked with &#x60;\&quot;k8s.io/initial-events-end\&quot;: \&quot;true\&quot;&#x60; annotation. Afterwards, the watch stream will proceed as usual, sending watch events corresponding to changes (subsequent to the RV) to objects watched.  When &#x60;sendInitialEvents&#x60; option is set, we require &#x60;resourceVersionMatch&#x60; option to also be set. The semantic of the watch request is as following: - &#x60;resourceVersionMatch&#x60; &#x3D; NotOlderThan   is interpreted as \&quot;data at least as new as the provided &#x60;resourceVersion&#x60;\&quot;   and the bookmark event is send when the state is synced   to a &#x60;resourceVersion&#x60; at least as fresh as the one provided by the ListOptions.   If &#x60;resourceVersion&#x60; is unset, this is interpreted as \&quot;consistent read\&quot; and the   bookmark event is send when the state is synced at least to the moment   when request started being processed. - &#x60;resourceVersionMatch&#x60; set to any other value or unset   Invalid error is returned.  Defaults to true if &#x60;resourceVersion&#x3D;\&quot;\&quot;&#x60; or &#x60;resourceVersion&#x3D;\&quot;0\&quot;&#x60; (for backward compatibility reasons) and to false otherwise. (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest sendInitialEvents(Boolean sendInitialEvents) {
+            this.sendInitialEvents = sendInitialEvents;
+            return this;
+        }
+
+        /**
+         * Set timeoutSeconds
+         * @param timeoutSeconds Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity. (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest timeoutSeconds(Integer timeoutSeconds) {
+            this.timeoutSeconds = timeoutSeconds;
+            return this;
+        }
+
+        /**
+         * Set watch
+         * @param watch Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion. (optional)
+         * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+         */
+        public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest watch(Boolean watch) {
+            this.watch = watch;
+            return this;
+        }
+
+        /**
+         * Build call for listSpringCloudGatewayRouteConfigForAllNamespaces
+         * @param _callback ApiCallback API callback
+         * @return Call to execute
+         * @throws ApiException If fail to serialize the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
+            return listSpringCloudGatewayRouteConfigForAllNamespacesCall(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
+        }
+
+        /**
+         * Execute listSpringCloudGatewayRouteConfigForAllNamespaces request
+         * @return V1SpringCloudGatewayRouteConfigList
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
+         </table>
+         */
+        public V1SpringCloudGatewayRouteConfigList execute() throws ApiException {
+            ApiResponse<V1SpringCloudGatewayRouteConfigList> localVarResp = listSpringCloudGatewayRouteConfigForAllNamespacesWithHttpInfo(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch);
+            return localVarResp.getData();
+        }
+
+        /**
+         * Execute listSpringCloudGatewayRouteConfigForAllNamespaces request with HTTP info returned
+         * @return ApiResponse&lt;V1SpringCloudGatewayRouteConfigList&gt;
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
+         </table>
+         */
+        public ApiResponse<V1SpringCloudGatewayRouteConfigList> executeWithHttpInfo() throws ApiException {
+            return listSpringCloudGatewayRouteConfigForAllNamespacesWithHttpInfo(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch);
+        }
+
+        /**
+         * Execute listSpringCloudGatewayRouteConfigForAllNamespaces request (asynchronously)
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         * @http.response.details
+         <table summary="Response Details" border="1">
+            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
+         </table>
+         */
+        public okhttp3.Call executeAsync(final ApiCallback<V1SpringCloudGatewayRouteConfigList> _callback) throws ApiException {
+            return listSpringCloudGatewayRouteConfigForAllNamespacesAsync(allowWatchBookmarks, _continue, fieldSelector, labelSelector, limit, pretty, resourceVersion, resourceVersionMatch, sendInitialEvents, timeoutSeconds, watch, _callback);
+        }
+    }
+
+    /**
+     * 
+     * list objects of kind SpringCloudGatewayRouteConfig
+     * @return APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
+     </table>
+     */
+    public APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest listSpringCloudGatewayRouteConfigForAllNamespaces() {
+        return new APIlistSpringCloudGatewayRouteConfigForAllNamespacesRequest();
+    }
+    private okhttp3.Call patchNamespacedSpringCloudGatewayRouteConfigCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1519,7 +1519,7 @@ public class GatewayNetworkingV1beta1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/namespaces/{namespace}/httproutes/{name}"
+        String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs/{name}"
             .replace("{" + "name" + "}", localVarApiClient.escapeString(name.toString()))
             .replace("{" + "namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
 
@@ -1571,42 +1571,42 @@ public class GatewayNetworkingV1beta1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchNamespacedHTTPRouteValidateBeforeCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call patchNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'name' is set
         if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling patchNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'name' when calling patchNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling patchNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling patchNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling patchNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
-        return patchNamespacedHTTPRouteCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
+        return patchNamespacedSpringCloudGatewayRouteConfigCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
 
     }
 
 
-    private ApiResponse<V1beta1HTTPRoute> patchNamespacedHTTPRouteWithHttpInfo(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force) throws ApiException {
-        okhttp3.Call localVarCall = patchNamespacedHTTPRouteValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, null);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
+    private ApiResponse<V1SpringCloudGatewayRouteConfig> patchNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force) throws ApiException {
+        okhttp3.Call localVarCall = patchNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, null);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfig>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call patchNamespacedHTTPRouteAsync(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force, final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
+    private okhttp3.Call patchNamespacedSpringCloudGatewayRouteConfigAsync(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force, final ApiCallback<V1SpringCloudGatewayRouteConfig> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = patchNamespacedHTTPRouteValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
+        okhttp3.Call localVarCall = patchNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfig>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    public class APIpatchNamespacedHTTPRouteRequest {
+    public class APIpatchNamespacedSpringCloudGatewayRouteConfigRequest {
         private final String name;
         private final String namespace;
         private final V1Patch body;
@@ -1616,7 +1616,7 @@ public class GatewayNetworkingV1beta1Api {
         private String fieldValidation;
         private Boolean force;
 
-        private APIpatchNamespacedHTTPRouteRequest(String name, String namespace, V1Patch body) {
+        private APIpatchNamespacedSpringCloudGatewayRouteConfigRequest(String name, String namespace, V1Patch body) {
             this.name = name;
             this.namespace = namespace;
             this.body = body;
@@ -1625,9 +1625,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set pretty
          * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIpatchNamespacedHTTPRouteRequest
+         * @return APIpatchNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIpatchNamespacedHTTPRouteRequest pretty(String pretty) {
+        public APIpatchNamespacedSpringCloudGatewayRouteConfigRequest pretty(String pretty) {
             this.pretty = pretty;
             return this;
         }
@@ -1635,9 +1635,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set dryRun
          * @param dryRun When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed (optional)
-         * @return APIpatchNamespacedHTTPRouteRequest
+         * @return APIpatchNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIpatchNamespacedHTTPRouteRequest dryRun(String dryRun) {
+        public APIpatchNamespacedSpringCloudGatewayRouteConfigRequest dryRun(String dryRun) {
             this.dryRun = dryRun;
             return this;
         }
@@ -1645,9 +1645,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set fieldManager
          * @param fieldManager fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). (optional)
-         * @return APIpatchNamespacedHTTPRouteRequest
+         * @return APIpatchNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIpatchNamespacedHTTPRouteRequest fieldManager(String fieldManager) {
+        public APIpatchNamespacedSpringCloudGatewayRouteConfigRequest fieldManager(String fieldManager) {
             this.fieldManager = fieldManager;
             return this;
         }
@@ -1655,9 +1655,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set fieldValidation
          * @param fieldValidation fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. (optional)
-         * @return APIpatchNamespacedHTTPRouteRequest
+         * @return APIpatchNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIpatchNamespacedHTTPRouteRequest fieldValidation(String fieldValidation) {
+        public APIpatchNamespacedSpringCloudGatewayRouteConfigRequest fieldValidation(String fieldValidation) {
             this.fieldValidation = fieldValidation;
             return this;
         }
@@ -1665,15 +1665,15 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set force
          * @param force Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. (optional)
-         * @return APIpatchNamespacedHTTPRouteRequest
+         * @return APIpatchNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIpatchNamespacedHTTPRouteRequest force(Boolean force) {
+        public APIpatchNamespacedSpringCloudGatewayRouteConfigRequest force(Boolean force) {
             this.force = force;
             return this;
         }
 
         /**
-         * Build call for patchNamespacedHTTPRoute
+         * Build call for patchNamespacedSpringCloudGatewayRouteConfig
          * @param _callback ApiCallback API callback
          * @return Call to execute
          * @throws ApiException If fail to serialize the request body object
@@ -1685,12 +1685,12 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return patchNamespacedHTTPRouteCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
+            return patchNamespacedSpringCloudGatewayRouteConfigCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
         }
 
         /**
-         * Execute patchNamespacedHTTPRoute request
-         * @return V1beta1HTTPRoute
+         * Execute patchNamespacedSpringCloudGatewayRouteConfig request
+         * @return V1SpringCloudGatewayRouteConfig
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -1699,14 +1699,14 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public V1beta1HTTPRoute execute() throws ApiException {
-            ApiResponse<V1beta1HTTPRoute> localVarResp = patchNamespacedHTTPRouteWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force);
+        public V1SpringCloudGatewayRouteConfig execute() throws ApiException {
+            ApiResponse<V1SpringCloudGatewayRouteConfig> localVarResp = patchNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force);
             return localVarResp.getData();
         }
 
         /**
-         * Execute patchNamespacedHTTPRoute request with HTTP info returned
-         * @return ApiResponse&lt;V1beta1HTTPRoute&gt;
+         * Execute patchNamespacedSpringCloudGatewayRouteConfig request with HTTP info returned
+         * @return ApiResponse&lt;V1SpringCloudGatewayRouteConfig&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -1715,12 +1715,12 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public ApiResponse<V1beta1HTTPRoute> executeWithHttpInfo() throws ApiException {
-            return patchNamespacedHTTPRouteWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force);
+        public ApiResponse<V1SpringCloudGatewayRouteConfig> executeWithHttpInfo() throws ApiException {
+            return patchNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force);
         }
 
         /**
-         * Execute patchNamespacedHTTPRoute request (asynchronously)
+         * Execute patchNamespacedSpringCloudGatewayRouteConfig request (asynchronously)
          * @param _callback The callback to be executed when the API call finishes
          * @return The request call
          * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1731,18 +1731,18 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public okhttp3.Call executeAsync(final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
-            return patchNamespacedHTTPRouteAsync(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
+        public okhttp3.Call executeAsync(final ApiCallback<V1SpringCloudGatewayRouteConfig> _callback) throws ApiException {
+            return patchNamespacedSpringCloudGatewayRouteConfigAsync(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
         }
     }
 
     /**
      * 
-     * partially update the specified HTTPRoute
-     * @param name name of the HTTPRoute (required)
+     * partially update the specified SpringCloudGatewayRouteConfig
+     * @param name name of the SpringCloudGatewayRouteConfig (required)
      * @param namespace object name and auth scope, such as for teams and projects (required)
      * @param body  (required)
-     * @return APIpatchNamespacedHTTPRouteRequest
+     * @return APIpatchNamespacedSpringCloudGatewayRouteConfigRequest
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
@@ -1750,261 +1750,10 @@ public class GatewayNetworkingV1beta1Api {
         <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
      </table>
      */
-    public APIpatchNamespacedHTTPRouteRequest patchNamespacedHTTPRoute(String name, String namespace, V1Patch body) {
-        return new APIpatchNamespacedHTTPRouteRequest(name, namespace, body);
+    public APIpatchNamespacedSpringCloudGatewayRouteConfigRequest patchNamespacedSpringCloudGatewayRouteConfig(String name, String namespace, V1Patch body) {
+        return new APIpatchNamespacedSpringCloudGatewayRouteConfigRequest(name, namespace, body);
     }
-    private okhttp3.Call patchNamespacedHTTPRouteStatusCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/namespaces/{namespace}/httproutes/{name}/status"
-            .replace("{" + "name" + "}", localVarApiClient.escapeString(name.toString()))
-            .replace("{" + "namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (pretty != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pretty", pretty));
-        }
-
-        if (dryRun != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("dryRun", dryRun));
-        }
-
-        if (fieldManager != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("fieldManager", fieldManager));
-        }
-
-        if (fieldValidation != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("fieldValidation", fieldValidation));
-        }
-
-        if (force != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("force", force));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "application/yaml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "BearerToken" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call patchNamespacedHTTPRouteStatusValidateBeforeCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'name' is set
-        if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling patchNamespacedHTTPRouteStatus(Async)");
-        }
-
-        // verify the required parameter 'namespace' is set
-        if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling patchNamespacedHTTPRouteStatus(Async)");
-        }
-
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling patchNamespacedHTTPRouteStatus(Async)");
-        }
-
-        return patchNamespacedHTTPRouteStatusCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
-
-    }
-
-
-    private ApiResponse<V1beta1HTTPRoute> patchNamespacedHTTPRouteStatusWithHttpInfo(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force) throws ApiException {
-        okhttp3.Call localVarCall = patchNamespacedHTTPRouteStatusValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, null);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    private okhttp3.Call patchNamespacedHTTPRouteStatusAsync(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, String fieldValidation, Boolean force, final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = patchNamespacedHTTPRouteStatusValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-
-    public class APIpatchNamespacedHTTPRouteStatusRequest {
-        private final String name;
-        private final String namespace;
-        private final V1Patch body;
-        private String pretty;
-        private String dryRun;
-        private String fieldManager;
-        private String fieldValidation;
-        private Boolean force;
-
-        private APIpatchNamespacedHTTPRouteStatusRequest(String name, String namespace, V1Patch body) {
-            this.name = name;
-            this.namespace = namespace;
-            this.body = body;
-        }
-
-        /**
-         * Set pretty
-         * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIpatchNamespacedHTTPRouteStatusRequest
-         */
-        public APIpatchNamespacedHTTPRouteStatusRequest pretty(String pretty) {
-            this.pretty = pretty;
-            return this;
-        }
-
-        /**
-         * Set dryRun
-         * @param dryRun When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed (optional)
-         * @return APIpatchNamespacedHTTPRouteStatusRequest
-         */
-        public APIpatchNamespacedHTTPRouteStatusRequest dryRun(String dryRun) {
-            this.dryRun = dryRun;
-            return this;
-        }
-
-        /**
-         * Set fieldManager
-         * @param fieldManager fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. This field is required for apply requests (application/apply-patch) but optional for non-apply patch types (JsonPatch, MergePatch, StrategicMergePatch). (optional)
-         * @return APIpatchNamespacedHTTPRouteStatusRequest
-         */
-        public APIpatchNamespacedHTTPRouteStatusRequest fieldManager(String fieldManager) {
-            this.fieldManager = fieldManager;
-            return this;
-        }
-
-        /**
-         * Set fieldValidation
-         * @param fieldValidation fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. (optional)
-         * @return APIpatchNamespacedHTTPRouteStatusRequest
-         */
-        public APIpatchNamespacedHTTPRouteStatusRequest fieldValidation(String fieldValidation) {
-            this.fieldValidation = fieldValidation;
-            return this;
-        }
-
-        /**
-         * Set force
-         * @param force Force is going to \&quot;force\&quot; Apply requests. It means user will re-acquire conflicting fields owned by other people. Force flag must be unset for non-apply patch requests. (optional)
-         * @return APIpatchNamespacedHTTPRouteStatusRequest
-         */
-        public APIpatchNamespacedHTTPRouteStatusRequest force(Boolean force) {
-            this.force = force;
-            return this;
-        }
-
-        /**
-         * Build call for patchNamespacedHTTPRouteStatus
-         * @param _callback ApiCallback API callback
-         * @return Call to execute
-         * @throws ApiException If fail to serialize the request body object
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return patchNamespacedHTTPRouteStatusCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
-        }
-
-        /**
-         * Execute patchNamespacedHTTPRouteStatus request
-         * @return V1beta1HTTPRoute
-         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public V1beta1HTTPRoute execute() throws ApiException {
-            ApiResponse<V1beta1HTTPRoute> localVarResp = patchNamespacedHTTPRouteStatusWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force);
-            return localVarResp.getData();
-        }
-
-        /**
-         * Execute patchNamespacedHTTPRouteStatus request with HTTP info returned
-         * @return ApiResponse&lt;V1beta1HTTPRoute&gt;
-         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public ApiResponse<V1beta1HTTPRoute> executeWithHttpInfo() throws ApiException {
-            return patchNamespacedHTTPRouteStatusWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force);
-        }
-
-        /**
-         * Execute patchNamespacedHTTPRouteStatus request (asynchronously)
-         * @param _callback The callback to be executed when the API call finishes
-         * @return The request call
-         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public okhttp3.Call executeAsync(final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
-            return patchNamespacedHTTPRouteStatusAsync(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, force, _callback);
-        }
-    }
-
-    /**
-     * 
-     * partially update status of the specified HTTPRoute
-     * @param name name of the HTTPRoute (required)
-     * @param namespace object name and auth scope, such as for teams and projects (required)
-     * @param body  (required)
-     * @return APIpatchNamespacedHTTPRouteStatusRequest
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-     </table>
-     */
-    public APIpatchNamespacedHTTPRouteStatusRequest patchNamespacedHTTPRouteStatus(String name, String namespace, V1Patch body) {
-        return new APIpatchNamespacedHTTPRouteStatusRequest(name, namespace, body);
-    }
-    private okhttp3.Call readNamespacedHTTPRouteCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call readNamespacedSpringCloudGatewayRouteConfigCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2021,7 +1770,7 @@ public class GatewayNetworkingV1beta1Api {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/namespaces/{namespace}/httproutes/{name}"
+        String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs/{name}"
             .replace("{" + "name" + "}", localVarApiClient.escapeString(name.toString()))
             .replace("{" + "namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
 
@@ -2060,43 +1809,43 @@ public class GatewayNetworkingV1beta1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call readNamespacedHTTPRouteValidateBeforeCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call readNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'name' is set
         if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling readNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'name' when calling readNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling readNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling readNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
-        return readNamespacedHTTPRouteCall(name, namespace, pretty, resourceVersion, _callback);
+        return readNamespacedSpringCloudGatewayRouteConfigCall(name, namespace, pretty, resourceVersion, _callback);
 
     }
 
 
-    private ApiResponse<V1beta1HTTPRoute> readNamespacedHTTPRouteWithHttpInfo(String name, String namespace, String pretty, String resourceVersion) throws ApiException {
-        okhttp3.Call localVarCall = readNamespacedHTTPRouteValidateBeforeCall(name, namespace, pretty, resourceVersion, null);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
+    private ApiResponse<V1SpringCloudGatewayRouteConfig> readNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(String name, String namespace, String pretty, String resourceVersion) throws ApiException {
+        okhttp3.Call localVarCall = readNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(name, namespace, pretty, resourceVersion, null);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfig>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call readNamespacedHTTPRouteAsync(String name, String namespace, String pretty, String resourceVersion, final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
+    private okhttp3.Call readNamespacedSpringCloudGatewayRouteConfigAsync(String name, String namespace, String pretty, String resourceVersion, final ApiCallback<V1SpringCloudGatewayRouteConfig> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = readNamespacedHTTPRouteValidateBeforeCall(name, namespace, pretty, resourceVersion, _callback);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
+        okhttp3.Call localVarCall = readNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(name, namespace, pretty, resourceVersion, _callback);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfig>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    public class APIreadNamespacedHTTPRouteRequest {
+    public class APIreadNamespacedSpringCloudGatewayRouteConfigRequest {
         private final String name;
         private final String namespace;
         private String pretty;
         private String resourceVersion;
 
-        private APIreadNamespacedHTTPRouteRequest(String name, String namespace) {
+        private APIreadNamespacedSpringCloudGatewayRouteConfigRequest(String name, String namespace) {
             this.name = name;
             this.namespace = namespace;
         }
@@ -2104,9 +1853,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set pretty
          * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIreadNamespacedHTTPRouteRequest
+         * @return APIreadNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIreadNamespacedHTTPRouteRequest pretty(String pretty) {
+        public APIreadNamespacedSpringCloudGatewayRouteConfigRequest pretty(String pretty) {
             this.pretty = pretty;
             return this;
         }
@@ -2114,15 +1863,15 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set resourceVersion
          * @param resourceVersion resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset (optional)
-         * @return APIreadNamespacedHTTPRouteRequest
+         * @return APIreadNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIreadNamespacedHTTPRouteRequest resourceVersion(String resourceVersion) {
+        public APIreadNamespacedSpringCloudGatewayRouteConfigRequest resourceVersion(String resourceVersion) {
             this.resourceVersion = resourceVersion;
             return this;
         }
 
         /**
-         * Build call for readNamespacedHTTPRoute
+         * Build call for readNamespacedSpringCloudGatewayRouteConfig
          * @param _callback ApiCallback API callback
          * @return Call to execute
          * @throws ApiException If fail to serialize the request body object
@@ -2134,12 +1883,12 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return readNamespacedHTTPRouteCall(name, namespace, pretty, resourceVersion, _callback);
+            return readNamespacedSpringCloudGatewayRouteConfigCall(name, namespace, pretty, resourceVersion, _callback);
         }
 
         /**
-         * Execute readNamespacedHTTPRoute request
-         * @return V1beta1HTTPRoute
+         * Execute readNamespacedSpringCloudGatewayRouteConfig request
+         * @return V1SpringCloudGatewayRouteConfig
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -2148,14 +1897,14 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public V1beta1HTTPRoute execute() throws ApiException {
-            ApiResponse<V1beta1HTTPRoute> localVarResp = readNamespacedHTTPRouteWithHttpInfo(name, namespace, pretty, resourceVersion);
+        public V1SpringCloudGatewayRouteConfig execute() throws ApiException {
+            ApiResponse<V1SpringCloudGatewayRouteConfig> localVarResp = readNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(name, namespace, pretty, resourceVersion);
             return localVarResp.getData();
         }
 
         /**
-         * Execute readNamespacedHTTPRoute request with HTTP info returned
-         * @return ApiResponse&lt;V1beta1HTTPRoute&gt;
+         * Execute readNamespacedSpringCloudGatewayRouteConfig request with HTTP info returned
+         * @return ApiResponse&lt;V1SpringCloudGatewayRouteConfig&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -2164,12 +1913,12 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public ApiResponse<V1beta1HTTPRoute> executeWithHttpInfo() throws ApiException {
-            return readNamespacedHTTPRouteWithHttpInfo(name, namespace, pretty, resourceVersion);
+        public ApiResponse<V1SpringCloudGatewayRouteConfig> executeWithHttpInfo() throws ApiException {
+            return readNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(name, namespace, pretty, resourceVersion);
         }
 
         /**
-         * Execute readNamespacedHTTPRoute request (asynchronously)
+         * Execute readNamespacedSpringCloudGatewayRouteConfig request (asynchronously)
          * @param _callback The callback to be executed when the API call finishes
          * @return The request call
          * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2180,17 +1929,17 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public okhttp3.Call executeAsync(final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
-            return readNamespacedHTTPRouteAsync(name, namespace, pretty, resourceVersion, _callback);
+        public okhttp3.Call executeAsync(final ApiCallback<V1SpringCloudGatewayRouteConfig> _callback) throws ApiException {
+            return readNamespacedSpringCloudGatewayRouteConfigAsync(name, namespace, pretty, resourceVersion, _callback);
         }
     }
 
     /**
      * 
-     * read the specified HTTPRoute
-     * @param name name of the HTTPRoute (required)
+     * read the specified SpringCloudGatewayRouteConfig
+     * @param name name of the SpringCloudGatewayRouteConfig (required)
      * @param namespace object name and auth scope, such as for teams and projects (required)
-     * @return APIreadNamespacedHTTPRouteRequest
+     * @return APIreadNamespacedSpringCloudGatewayRouteConfigRequest
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
@@ -2198,207 +1947,10 @@ public class GatewayNetworkingV1beta1Api {
         <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
      </table>
      */
-    public APIreadNamespacedHTTPRouteRequest readNamespacedHTTPRoute(String name, String namespace) {
-        return new APIreadNamespacedHTTPRouteRequest(name, namespace);
+    public APIreadNamespacedSpringCloudGatewayRouteConfigRequest readNamespacedSpringCloudGatewayRouteConfig(String name, String namespace) {
+        return new APIreadNamespacedSpringCloudGatewayRouteConfigRequest(name, namespace);
     }
-    private okhttp3.Call readNamespacedHTTPRouteStatusCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/namespaces/{namespace}/httproutes/{name}/status"
-            .replace("{" + "name" + "}", localVarApiClient.escapeString(name.toString()))
-            .replace("{" + "namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (pretty != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pretty", pretty));
-        }
-
-        if (resourceVersion != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("resourceVersion", resourceVersion));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "application/yaml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "BearerToken" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call readNamespacedHTTPRouteStatusValidateBeforeCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'name' is set
-        if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling readNamespacedHTTPRouteStatus(Async)");
-        }
-
-        // verify the required parameter 'namespace' is set
-        if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling readNamespacedHTTPRouteStatus(Async)");
-        }
-
-        return readNamespacedHTTPRouteStatusCall(name, namespace, pretty, resourceVersion, _callback);
-
-    }
-
-
-    private ApiResponse<V1beta1HTTPRoute> readNamespacedHTTPRouteStatusWithHttpInfo(String name, String namespace, String pretty, String resourceVersion) throws ApiException {
-        okhttp3.Call localVarCall = readNamespacedHTTPRouteStatusValidateBeforeCall(name, namespace, pretty, resourceVersion, null);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    private okhttp3.Call readNamespacedHTTPRouteStatusAsync(String name, String namespace, String pretty, String resourceVersion, final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = readNamespacedHTTPRouteStatusValidateBeforeCall(name, namespace, pretty, resourceVersion, _callback);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-
-    public class APIreadNamespacedHTTPRouteStatusRequest {
-        private final String name;
-        private final String namespace;
-        private String pretty;
-        private String resourceVersion;
-
-        private APIreadNamespacedHTTPRouteStatusRequest(String name, String namespace) {
-            this.name = name;
-            this.namespace = namespace;
-        }
-
-        /**
-         * Set pretty
-         * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIreadNamespacedHTTPRouteStatusRequest
-         */
-        public APIreadNamespacedHTTPRouteStatusRequest pretty(String pretty) {
-            this.pretty = pretty;
-            return this;
-        }
-
-        /**
-         * Set resourceVersion
-         * @param resourceVersion resourceVersion sets a constraint on what resource versions a request may be served from. See https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-versions for details.  Defaults to unset (optional)
-         * @return APIreadNamespacedHTTPRouteStatusRequest
-         */
-        public APIreadNamespacedHTTPRouteStatusRequest resourceVersion(String resourceVersion) {
-            this.resourceVersion = resourceVersion;
-            return this;
-        }
-
-        /**
-         * Build call for readNamespacedHTTPRouteStatus
-         * @param _callback ApiCallback API callback
-         * @return Call to execute
-         * @throws ApiException If fail to serialize the request body object
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return readNamespacedHTTPRouteStatusCall(name, namespace, pretty, resourceVersion, _callback);
-        }
-
-        /**
-         * Execute readNamespacedHTTPRouteStatus request
-         * @return V1beta1HTTPRoute
-         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public V1beta1HTTPRoute execute() throws ApiException {
-            ApiResponse<V1beta1HTTPRoute> localVarResp = readNamespacedHTTPRouteStatusWithHttpInfo(name, namespace, pretty, resourceVersion);
-            return localVarResp.getData();
-        }
-
-        /**
-         * Execute readNamespacedHTTPRouteStatus request with HTTP info returned
-         * @return ApiResponse&lt;V1beta1HTTPRoute&gt;
-         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public ApiResponse<V1beta1HTTPRoute> executeWithHttpInfo() throws ApiException {
-            return readNamespacedHTTPRouteStatusWithHttpInfo(name, namespace, pretty, resourceVersion);
-        }
-
-        /**
-         * Execute readNamespacedHTTPRouteStatus request (asynchronously)
-         * @param _callback The callback to be executed when the API call finishes
-         * @return The request call
-         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public okhttp3.Call executeAsync(final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
-            return readNamespacedHTTPRouteStatusAsync(name, namespace, pretty, resourceVersion, _callback);
-        }
-    }
-
-    /**
-     * 
-     * read status of the specified HTTPRoute
-     * @param name name of the HTTPRoute (required)
-     * @param namespace object name and auth scope, such as for teams and projects (required)
-     * @return APIreadNamespacedHTTPRouteStatusRequest
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-     </table>
-     */
-    public APIreadNamespacedHTTPRouteStatusRequest readNamespacedHTTPRouteStatus(String name, String namespace) {
-        return new APIreadNamespacedHTTPRouteStatusRequest(name, namespace);
-    }
-    private okhttp3.Call replaceNamespacedHTTPRouteCall(String name, String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call replaceNamespacedSpringCloudGatewayRouteConfigCall(String name, String namespace, V1SpringCloudGatewayRouteConfig body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2415,7 +1967,7 @@ public class GatewayNetworkingV1beta1Api {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/namespaces/{namespace}/httproutes/{name}"
+        String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs/{name}"
             .replace("{" + "name" + "}", localVarApiClient.escapeString(name.toString()))
             .replace("{" + "namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
 
@@ -2463,51 +2015,51 @@ public class GatewayNetworkingV1beta1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call replaceNamespacedHTTPRouteValidateBeforeCall(String name, String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call replaceNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(String name, String namespace, V1SpringCloudGatewayRouteConfig body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'name' is set
         if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling replaceNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'name' when calling replaceNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
         // verify the required parameter 'namespace' is set
         if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling replaceNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'namespace' when calling replaceNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling replaceNamespacedHTTPRoute(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling replaceNamespacedSpringCloudGatewayRouteConfig(Async)");
         }
 
-        return replaceNamespacedHTTPRouteCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
+        return replaceNamespacedSpringCloudGatewayRouteConfigCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
 
     }
 
 
-    private ApiResponse<V1beta1HTTPRoute> replaceNamespacedHTTPRouteWithHttpInfo(String name, String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation) throws ApiException {
-        okhttp3.Call localVarCall = replaceNamespacedHTTPRouteValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, null);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
+    private ApiResponse<V1SpringCloudGatewayRouteConfig> replaceNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(String name, String namespace, V1SpringCloudGatewayRouteConfig body, String pretty, String dryRun, String fieldManager, String fieldValidation) throws ApiException {
+        okhttp3.Call localVarCall = replaceNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, null);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfig>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
-    private okhttp3.Call replaceNamespacedHTTPRouteAsync(String name, String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
+    private okhttp3.Call replaceNamespacedSpringCloudGatewayRouteConfigAsync(String name, String namespace, V1SpringCloudGatewayRouteConfig body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback<V1SpringCloudGatewayRouteConfig> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = replaceNamespacedHTTPRouteValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
+        okhttp3.Call localVarCall = replaceNamespacedSpringCloudGatewayRouteConfigValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
+        Type localVarReturnType = new TypeToken<V1SpringCloudGatewayRouteConfig>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 
-    public class APIreplaceNamespacedHTTPRouteRequest {
+    public class APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest {
         private final String name;
         private final String namespace;
-        private final V1beta1HTTPRoute body;
+        private final V1SpringCloudGatewayRouteConfig body;
         private String pretty;
         private String dryRun;
         private String fieldManager;
         private String fieldValidation;
 
-        private APIreplaceNamespacedHTTPRouteRequest(String name, String namespace, V1beta1HTTPRoute body) {
+        private APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest(String name, String namespace, V1SpringCloudGatewayRouteConfig body) {
             this.name = name;
             this.namespace = namespace;
             this.body = body;
@@ -2516,9 +2068,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set pretty
          * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIreplaceNamespacedHTTPRouteRequest
+         * @return APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIreplaceNamespacedHTTPRouteRequest pretty(String pretty) {
+        public APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest pretty(String pretty) {
             this.pretty = pretty;
             return this;
         }
@@ -2526,9 +2078,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set dryRun
          * @param dryRun When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed (optional)
-         * @return APIreplaceNamespacedHTTPRouteRequest
+         * @return APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIreplaceNamespacedHTTPRouteRequest dryRun(String dryRun) {
+        public APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest dryRun(String dryRun) {
             this.dryRun = dryRun;
             return this;
         }
@@ -2536,9 +2088,9 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set fieldManager
          * @param fieldManager fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. (optional)
-         * @return APIreplaceNamespacedHTTPRouteRequest
+         * @return APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIreplaceNamespacedHTTPRouteRequest fieldManager(String fieldManager) {
+        public APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest fieldManager(String fieldManager) {
             this.fieldManager = fieldManager;
             return this;
         }
@@ -2546,15 +2098,15 @@ public class GatewayNetworkingV1beta1Api {
         /**
          * Set fieldValidation
          * @param fieldValidation fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. (optional)
-         * @return APIreplaceNamespacedHTTPRouteRequest
+         * @return APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest
          */
-        public APIreplaceNamespacedHTTPRouteRequest fieldValidation(String fieldValidation) {
+        public APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest fieldValidation(String fieldValidation) {
             this.fieldValidation = fieldValidation;
             return this;
         }
 
         /**
-         * Build call for replaceNamespacedHTTPRoute
+         * Build call for replaceNamespacedSpringCloudGatewayRouteConfig
          * @param _callback ApiCallback API callback
          * @return Call to execute
          * @throws ApiException If fail to serialize the request body object
@@ -2567,12 +2119,12 @@ public class GatewayNetworkingV1beta1Api {
          </table>
          */
         public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return replaceNamespacedHTTPRouteCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
+            return replaceNamespacedSpringCloudGatewayRouteConfigCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
         }
 
         /**
-         * Execute replaceNamespacedHTTPRoute request
-         * @return V1beta1HTTPRoute
+         * Execute replaceNamespacedSpringCloudGatewayRouteConfig request
+         * @return V1SpringCloudGatewayRouteConfig
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -2582,14 +2134,14 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public V1beta1HTTPRoute execute() throws ApiException {
-            ApiResponse<V1beta1HTTPRoute> localVarResp = replaceNamespacedHTTPRouteWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation);
+        public V1SpringCloudGatewayRouteConfig execute() throws ApiException {
+            ApiResponse<V1SpringCloudGatewayRouteConfig> localVarResp = replaceNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation);
             return localVarResp.getData();
         }
 
         /**
-         * Execute replaceNamespacedHTTPRoute request with HTTP info returned
-         * @return ApiResponse&lt;V1beta1HTTPRoute&gt;
+         * Execute replaceNamespacedSpringCloudGatewayRouteConfig request with HTTP info returned
+         * @return ApiResponse&lt;V1SpringCloudGatewayRouteConfig&gt;
          * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
          * @http.response.details
          <table summary="Response Details" border="1">
@@ -2599,12 +2151,12 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public ApiResponse<V1beta1HTTPRoute> executeWithHttpInfo() throws ApiException {
-            return replaceNamespacedHTTPRouteWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation);
+        public ApiResponse<V1SpringCloudGatewayRouteConfig> executeWithHttpInfo() throws ApiException {
+            return replaceNamespacedSpringCloudGatewayRouteConfigWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation);
         }
 
         /**
-         * Execute replaceNamespacedHTTPRoute request (asynchronously)
+         * Execute replaceNamespacedSpringCloudGatewayRouteConfig request (asynchronously)
          * @param _callback The callback to be executed when the API call finishes
          * @return The request call
          * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2616,18 +2168,18 @@ public class GatewayNetworkingV1beta1Api {
             <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
          </table>
          */
-        public okhttp3.Call executeAsync(final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
-            return replaceNamespacedHTTPRouteAsync(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
+        public okhttp3.Call executeAsync(final ApiCallback<V1SpringCloudGatewayRouteConfig> _callback) throws ApiException {
+            return replaceNamespacedSpringCloudGatewayRouteConfigAsync(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
         }
     }
 
     /**
      * 
-     * replace the specified HTTPRoute
-     * @param name name of the HTTPRoute (required)
+     * replace the specified SpringCloudGatewayRouteConfig
+     * @param name name of the SpringCloudGatewayRouteConfig (required)
      * @param namespace object name and auth scope, such as for teams and projects (required)
      * @param body  (required)
-     * @return APIreplaceNamespacedHTTPRouteRequest
+     * @return APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
@@ -2636,248 +2188,7 @@ public class GatewayNetworkingV1beta1Api {
         <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
      </table>
      */
-    public APIreplaceNamespacedHTTPRouteRequest replaceNamespacedHTTPRoute(String name, String namespace, V1beta1HTTPRoute body) {
-        return new APIreplaceNamespacedHTTPRouteRequest(name, namespace, body);
-    }
-    private okhttp3.Call replaceNamespacedHTTPRouteStatusCall(String name, String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/apis/gateway.networking.k8s.io/v1beta1/namespaces/{namespace}/httproutes/{name}/status"
-            .replace("{" + "name" + "}", localVarApiClient.escapeString(name.toString()))
-            .replace("{" + "namespace" + "}", localVarApiClient.escapeString(namespace.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (pretty != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("pretty", pretty));
-        }
-
-        if (dryRun != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("dryRun", dryRun));
-        }
-
-        if (fieldManager != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("fieldManager", fieldManager));
-        }
-
-        if (fieldValidation != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("fieldValidation", fieldValidation));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "application/yaml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "BearerToken" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call replaceNamespacedHTTPRouteStatusValidateBeforeCall(String name, String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'name' is set
-        if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling replaceNamespacedHTTPRouteStatus(Async)");
-        }
-
-        // verify the required parameter 'namespace' is set
-        if (namespace == null) {
-            throw new ApiException("Missing the required parameter 'namespace' when calling replaceNamespacedHTTPRouteStatus(Async)");
-        }
-
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling replaceNamespacedHTTPRouteStatus(Async)");
-        }
-
-        return replaceNamespacedHTTPRouteStatusCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
-
-    }
-
-
-    private ApiResponse<V1beta1HTTPRoute> replaceNamespacedHTTPRouteStatusWithHttpInfo(String name, String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation) throws ApiException {
-        okhttp3.Call localVarCall = replaceNamespacedHTTPRouteStatusValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, null);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    private okhttp3.Call replaceNamespacedHTTPRouteStatusAsync(String name, String namespace, V1beta1HTTPRoute body, String pretty, String dryRun, String fieldManager, String fieldValidation, final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = replaceNamespacedHTTPRouteStatusValidateBeforeCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
-        Type localVarReturnType = new TypeToken<V1beta1HTTPRoute>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-
-    public class APIreplaceNamespacedHTTPRouteStatusRequest {
-        private final String name;
-        private final String namespace;
-        private final V1beta1HTTPRoute body;
-        private String pretty;
-        private String dryRun;
-        private String fieldManager;
-        private String fieldValidation;
-
-        private APIreplaceNamespacedHTTPRouteStatusRequest(String name, String namespace, V1beta1HTTPRoute body) {
-            this.name = name;
-            this.namespace = namespace;
-            this.body = body;
-        }
-
-        /**
-         * Set pretty
-         * @param pretty If &#39;true&#39;, then the output is pretty printed. (optional)
-         * @return APIreplaceNamespacedHTTPRouteStatusRequest
-         */
-        public APIreplaceNamespacedHTTPRouteStatusRequest pretty(String pretty) {
-            this.pretty = pretty;
-            return this;
-        }
-
-        /**
-         * Set dryRun
-         * @param dryRun When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed (optional)
-         * @return APIreplaceNamespacedHTTPRouteStatusRequest
-         */
-        public APIreplaceNamespacedHTTPRouteStatusRequest dryRun(String dryRun) {
-            this.dryRun = dryRun;
-            return this;
-        }
-
-        /**
-         * Set fieldManager
-         * @param fieldManager fieldManager is a name associated with the actor or entity that is making these changes. The value must be less than or 128 characters long, and only contain printable characters, as defined by https://golang.org/pkg/unicode/#IsPrint. (optional)
-         * @return APIreplaceNamespacedHTTPRouteStatusRequest
-         */
-        public APIreplaceNamespacedHTTPRouteStatusRequest fieldManager(String fieldManager) {
-            this.fieldManager = fieldManager;
-            return this;
-        }
-
-        /**
-         * Set fieldValidation
-         * @param fieldValidation fieldValidation instructs the server on how to handle objects in the request (POST/PUT/PATCH) containing unknown or duplicate fields. Valid values are: - Ignore: This will ignore any unknown fields that are silently dropped from the object, and will ignore all but the last duplicate field that the decoder encounters. This is the default behavior prior to v1.23. - Warn: This will send a warning via the standard warning response header for each unknown field that is dropped from the object, and for each duplicate field that is encountered. The request will still succeed if there are no other errors, and will only persist the last of any duplicate fields. This is the default in v1.23+ - Strict: This will fail the request with a BadRequest error if any unknown fields would be dropped from the object, or if any duplicate fields are present. The error returned from the server will contain all unknown and duplicate fields encountered. (optional)
-         * @return APIreplaceNamespacedHTTPRouteStatusRequest
-         */
-        public APIreplaceNamespacedHTTPRouteStatusRequest fieldValidation(String fieldValidation) {
-            this.fieldValidation = fieldValidation;
-            return this;
-        }
-
-        /**
-         * Build call for replaceNamespacedHTTPRouteStatus
-         * @param _callback ApiCallback API callback
-         * @return Call to execute
-         * @throws ApiException If fail to serialize the request body object
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
-            return replaceNamespacedHTTPRouteStatusCall(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
-        }
-
-        /**
-         * Execute replaceNamespacedHTTPRouteStatus request
-         * @return V1beta1HTTPRoute
-         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public V1beta1HTTPRoute execute() throws ApiException {
-            ApiResponse<V1beta1HTTPRoute> localVarResp = replaceNamespacedHTTPRouteStatusWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation);
-            return localVarResp.getData();
-        }
-
-        /**
-         * Execute replaceNamespacedHTTPRouteStatus request with HTTP info returned
-         * @return ApiResponse&lt;V1beta1HTTPRoute&gt;
-         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public ApiResponse<V1beta1HTTPRoute> executeWithHttpInfo() throws ApiException {
-            return replaceNamespacedHTTPRouteStatusWithHttpInfo(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation);
-        }
-
-        /**
-         * Execute replaceNamespacedHTTPRouteStatus request (asynchronously)
-         * @param _callback The callback to be executed when the API call finishes
-         * @return The request call
-         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-         * @http.response.details
-         <table summary="Response Details" border="1">
-            <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-            <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-            <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-            <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-         </table>
-         */
-        public okhttp3.Call executeAsync(final ApiCallback<V1beta1HTTPRoute> _callback) throws ApiException {
-            return replaceNamespacedHTTPRouteStatusAsync(name, namespace, body, pretty, dryRun, fieldManager, fieldValidation, _callback);
-        }
-    }
-
-    /**
-     * 
-     * replace status of the specified HTTPRoute
-     * @param name name of the HTTPRoute (required)
-     * @param namespace object name and auth scope, such as for teams and projects (required)
-     * @param body  (required)
-     * @return APIreplaceNamespacedHTTPRouteStatusRequest
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-        <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
-     </table>
-     */
-    public APIreplaceNamespacedHTTPRouteStatusRequest replaceNamespacedHTTPRouteStatus(String name, String namespace, V1beta1HTTPRoute body) {
-        return new APIreplaceNamespacedHTTPRouteStatusRequest(name, namespace, body);
+    public APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest replaceNamespacedSpringCloudGatewayRouteConfig(String name, String namespace, V1SpringCloudGatewayRouteConfig body) {
+        return new APIreplaceNamespacedSpringCloudGatewayRouteConfigRequest(name, namespace, body);
     }
 }

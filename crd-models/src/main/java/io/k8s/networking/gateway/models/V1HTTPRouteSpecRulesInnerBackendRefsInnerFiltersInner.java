@@ -14,7 +14,6 @@
 package io.k8s.networking.gateway.models;
 
 import java.util.Objects;
-import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -27,6 +26,7 @@ import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInnerBackendRefsInne
 import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier;
 import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerUrlRewrite;
 import java.io.IOException;
+import java.util.Arrays;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,7 +48,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import io.kubernetes.client.openapi.JSON;
@@ -131,6 +130,11 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
         return TypeEnum.fromValue(value);
       }
     }
+
+    public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      String value = jsonElement.getAsString();
+      TypeEnum.fromValue(value);
+    }
   }
 
   public static final String SERIALIZED_NAME_TYPE = "type";
@@ -145,7 +149,6 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
   }
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner extensionRef(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerExtensionRef extensionRef) {
-    
     this.extensionRef = extensionRef;
     return this;
   }
@@ -159,14 +162,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
     return extensionRef;
   }
 
-
   public void setExtensionRef(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerExtensionRef extensionRef) {
     this.extensionRef = extensionRef;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner requestHeaderModifier(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifier requestHeaderModifier) {
-    
     this.requestHeaderModifier = requestHeaderModifier;
     return this;
   }
@@ -180,14 +181,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
     return requestHeaderModifier;
   }
 
-
   public void setRequestHeaderModifier(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifier requestHeaderModifier) {
     this.requestHeaderModifier = requestHeaderModifier;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner requestMirror(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestMirror requestMirror) {
-    
     this.requestMirror = requestMirror;
     return this;
   }
@@ -201,14 +200,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
     return requestMirror;
   }
 
-
   public void setRequestMirror(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestMirror requestMirror) {
     this.requestMirror = requestMirror;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner requestRedirect(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestRedirect requestRedirect) {
-    
     this.requestRedirect = requestRedirect;
     return this;
   }
@@ -222,14 +219,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
     return requestRedirect;
   }
 
-
   public void setRequestRedirect(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestRedirect requestRedirect) {
     this.requestRedirect = requestRedirect;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner responseHeaderModifier(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier responseHeaderModifier) {
-    
     this.responseHeaderModifier = responseHeaderModifier;
     return this;
   }
@@ -243,14 +238,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
     return responseHeaderModifier;
   }
 
-
   public void setResponseHeaderModifier(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier responseHeaderModifier) {
     this.responseHeaderModifier = responseHeaderModifier;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner type(TypeEnum type) {
-    
     this.type = type;
     return this;
   }
@@ -264,14 +257,12 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
     return type;
   }
 
-
   public void setType(TypeEnum type) {
     this.type = type;
   }
 
 
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner urlRewrite(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerUrlRewrite urlRewrite) {
-    
     this.urlRewrite = urlRewrite;
     return this;
   }
@@ -284,7 +275,6 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
   public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerUrlRewrite getUrlRewrite() {
     return urlRewrite;
   }
-
 
   public void setUrlRewrite(V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerUrlRewrite urlRewrite) {
     this.urlRewrite = urlRewrite;
@@ -362,58 +352,61 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner is not found in the empty JSON string", V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
 
       // check to make sure all required properties/fields are present in the JSON string
       for (String requiredField : V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
+        if (jsonElement.getAsJsonObject().get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       // validate the optional field `extensionRef`
       if (jsonObj.get("extensionRef") != null && !jsonObj.get("extensionRef").isJsonNull()) {
-        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerExtensionRef.validateJsonObject(jsonObj.getAsJsonObject("extensionRef"));
+        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerExtensionRef.validateJsonElement(jsonObj.get("extensionRef"));
       }
       // validate the optional field `requestHeaderModifier`
       if (jsonObj.get("requestHeaderModifier") != null && !jsonObj.get("requestHeaderModifier").isJsonNull()) {
-        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifier.validateJsonObject(jsonObj.getAsJsonObject("requestHeaderModifier"));
+        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestHeaderModifier.validateJsonElement(jsonObj.get("requestHeaderModifier"));
       }
       // validate the optional field `requestMirror`
       if (jsonObj.get("requestMirror") != null && !jsonObj.get("requestMirror").isJsonNull()) {
-        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestMirror.validateJsonObject(jsonObj.getAsJsonObject("requestMirror"));
+        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestMirror.validateJsonElement(jsonObj.get("requestMirror"));
       }
       // validate the optional field `requestRedirect`
       if (jsonObj.get("requestRedirect") != null && !jsonObj.get("requestRedirect").isJsonNull()) {
-        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestRedirect.validateJsonObject(jsonObj.getAsJsonObject("requestRedirect"));
+        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerRequestRedirect.validateJsonElement(jsonObj.get("requestRedirect"));
       }
       // validate the optional field `responseHeaderModifier`
       if (jsonObj.get("responseHeaderModifier") != null && !jsonObj.get("responseHeaderModifier").isJsonNull()) {
-        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier.validateJsonObject(jsonObj.getAsJsonObject("responseHeaderModifier"));
+        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerResponseHeaderModifier.validateJsonElement(jsonObj.get("responseHeaderModifier"));
       }
       if (!jsonObj.get("type").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `type` to be a primitive type in the JSON string but got `%s`", jsonObj.get("type").toString()));
       }
+      // validate the required field `type`
+      TypeEnum.validateJsonElement(jsonObj.get("type"));
       // validate the optional field `urlRewrite`
       if (jsonObj.get("urlRewrite") != null && !jsonObj.get("urlRewrite").isJsonNull()) {
-        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerUrlRewrite.validateJsonObject(jsonObj.getAsJsonObject("urlRewrite"));
+        V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInnerUrlRewrite.validateJsonElement(jsonObj.get("urlRewrite"));
       }
   }
 
@@ -437,9 +430,9 @@ public class V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner {
 
            @Override
            public V1HTTPRouteSpecRulesInnerBackendRefsInnerFiltersInner read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();

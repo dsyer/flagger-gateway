@@ -26,10 +26,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
+
+import com.vmware.tanzu.models.V1SpringCloudGatewayRouteConfig;
+import com.vmware.tanzu.models.V1SpringCloudGatewayRouteConfigList;
 
 import io.k8s.networking.gateway.models.V1HTTPRoute;
 import io.k8s.networking.gateway.models.V1HTTPRouteList;
@@ -46,18 +45,16 @@ import io.kubernetes.client.util.generic.KubernetesApiResponse;
  * @author Dave Syer
  */
 @SpringBootTest
-@Testcontainers
 public class ClusterIT {
 
-	@Value("${NAMESPACE:default}")
+	@Value("${NAMESPACE:apps}")
 	private final String namespace = "default";
 
 	@Autowired
 	private GenericKubernetesApi<V1HTTPRoute, V1HTTPRouteList> configs;
 
-	@Container
-	public static GenericContainer<?> configserver = new GenericContainer<>(
-			DockerImageName.parse("springcloud/configserver")).withExposedPorts(8888);
+	@Autowired
+	private GenericKubernetesApi<V1SpringCloudGatewayRouteConfig, V1SpringCloudGatewayRouteConfigList> routes;
 
 	private String name;
 
@@ -70,8 +67,12 @@ public class ClusterIT {
 
 	@Test
 	void createV1HTTPRouteAndCheckStatus() throws Exception {
+
+		var before = routes.list(namespace).getObject().getItems().size();
+
 		var route = new V1HTTPRoute();
-		route.setKind("V1HTTPRoute");
+		route.setApiVersion("v1");
+		route.setKind("HTTPRoute");
 		route.setApiVersion("gateway.networking.k8s.io/v1");
 
 		var metadata = new V1ObjectMeta();
@@ -98,13 +99,11 @@ public class ClusterIT {
 		name = result.getMetadata().getName();
 		Awaitility.await().atMost(Duration.ofMinutes(1)).until(() -> {
 			KubernetesApiResponse<V1HTTPRoute> config = configs.get(namespace, result.getMetadata().getName());
-			// TODO: await the route appearing in the gateway
 			return config != null && //
-					config.getObject() != null && //
-					config.getObject().getStatus() != null;
+					config.getObject() != null;
 		});
 
-		// assertThat(maps.list(namespace).getObject().getItems().size()).isEqualTo(before + 1);
+		assertThat(routes.list(namespace).getObject().getItems().size()).isEqualTo(before + 1);
 
 	}
 

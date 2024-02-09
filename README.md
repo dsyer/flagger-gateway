@@ -145,10 +145,9 @@ $ kubectl get httproutes.gateway.networking.k8s.io -o yaml
 
 # Gateway App
 
+Assuming [Spring Cloud Gateway for Kubernetes](https://docs.vmware.com/en/VMware-Spring-Cloud-Gateway-for-Kubernetes) is installed in your cluster, you can deploy the gateway app:
+
 ```
-$ mvn spring-boot:build-image
-$ docker tag gateway:0.0.1-SNAPSHOT localhost:5000/gateway
-$ docker push localhost:5000/gateway
 $ kubectl apply -f config/gateway.yaml
 ```
 

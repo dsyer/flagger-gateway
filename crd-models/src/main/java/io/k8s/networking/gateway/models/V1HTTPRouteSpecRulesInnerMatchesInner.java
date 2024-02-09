@@ -14,7 +14,6 @@
 package io.k8s.networking.gateway.models;
 
 import java.util.Objects;
-import java.util.Arrays;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -25,6 +24,7 @@ import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInnerMatchesInnerPat
 import io.k8s.networking.gateway.models.V1HTTPRouteSpecRulesInnerMatchesInnerQueryParamsInner;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -47,7 +47,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import io.kubernetes.client.openapi.JSON;
@@ -120,6 +119,11 @@ public class V1HTTPRouteSpecRulesInnerMatchesInner {
         return MethodEnum.fromValue(value);
       }
     }
+
+    public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      String value = jsonElement.getAsString();
+      MethodEnum.fromValue(value);
+    }
   }
 
   public static final String SERIALIZED_NAME_METHOD = "method";
@@ -138,7 +142,6 @@ public class V1HTTPRouteSpecRulesInnerMatchesInner {
   }
 
   public V1HTTPRouteSpecRulesInnerMatchesInner headers(List<V1HTTPRouteSpecRulesInnerMatchesInnerHeadersInner> headers) {
-    
     this.headers = headers;
     return this;
   }
@@ -160,14 +163,12 @@ public class V1HTTPRouteSpecRulesInnerMatchesInner {
     return headers;
   }
 
-
   public void setHeaders(List<V1HTTPRouteSpecRulesInnerMatchesInnerHeadersInner> headers) {
     this.headers = headers;
   }
 
 
   public V1HTTPRouteSpecRulesInnerMatchesInner method(MethodEnum method) {
-    
     this.method = method;
     return this;
   }
@@ -181,14 +182,12 @@ public class V1HTTPRouteSpecRulesInnerMatchesInner {
     return method;
   }
 
-
   public void setMethod(MethodEnum method) {
     this.method = method;
   }
 
 
   public V1HTTPRouteSpecRulesInnerMatchesInner path(V1HTTPRouteSpecRulesInnerMatchesInnerPath path) {
-    
     this.path = path;
     return this;
   }
@@ -202,14 +201,12 @@ public class V1HTTPRouteSpecRulesInnerMatchesInner {
     return path;
   }
 
-
   public void setPath(V1HTTPRouteSpecRulesInnerMatchesInnerPath path) {
     this.path = path;
   }
 
 
   public V1HTTPRouteSpecRulesInnerMatchesInner queryParams(List<V1HTTPRouteSpecRulesInnerMatchesInnerQueryParamsInner> queryParams) {
-    
     this.queryParams = queryParams;
     return this;
   }
@@ -230,7 +227,6 @@ public class V1HTTPRouteSpecRulesInnerMatchesInner {
   public List<V1HTTPRouteSpecRulesInnerMatchesInnerQueryParamsInner> getQueryParams() {
     return queryParams;
   }
-
 
   public void setQueryParams(List<V1HTTPRouteSpecRulesInnerMatchesInnerQueryParamsInner> queryParams) {
     this.queryParams = queryParams;
@@ -298,25 +294,26 @@ public class V1HTTPRouteSpecRulesInnerMatchesInner {
   }
 
  /**
-  * Validates the JSON Object and throws an exception if issues found
+  * Validates the JSON Element and throws an exception if issues found
   *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to V1HTTPRouteSpecRulesInnerMatchesInner
+  * @param jsonElement JSON Element
+  * @throws IOException if the JSON Element is invalid with respect to V1HTTPRouteSpecRulesInnerMatchesInner
   */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (!V1HTTPRouteSpecRulesInnerMatchesInner.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
+      if (jsonElement == null) {
+        if (!V1HTTPRouteSpecRulesInnerMatchesInner.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in V1HTTPRouteSpecRulesInnerMatchesInner is not found in the empty JSON string", V1HTTPRouteSpecRulesInnerMatchesInner.openapiRequiredFields.toString()));
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
+      for (Map.Entry<String, JsonElement> entry : entries) {
         if (!V1HTTPRouteSpecRulesInnerMatchesInner.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1HTTPRouteSpecRulesInnerMatchesInner` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `V1HTTPRouteSpecRulesInnerMatchesInner` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
+        JsonObject jsonObj = jsonElement.getAsJsonObject();
       if (jsonObj.get("headers") != null && !jsonObj.get("headers").isJsonNull()) {
         JsonArray jsonArrayheaders = jsonObj.getAsJsonArray("headers");
         if (jsonArrayheaders != null) {
@@ -327,16 +324,20 @@ public class V1HTTPRouteSpecRulesInnerMatchesInner {
 
           // validate the optional field `headers` (array)
           for (int i = 0; i < jsonArrayheaders.size(); i++) {
-            V1HTTPRouteSpecRulesInnerMatchesInnerHeadersInner.validateJsonObject(jsonArrayheaders.get(i).getAsJsonObject());
+            V1HTTPRouteSpecRulesInnerMatchesInnerHeadersInner.validateJsonElement(jsonArrayheaders.get(i));
           };
         }
       }
       if ((jsonObj.get("method") != null && !jsonObj.get("method").isJsonNull()) && !jsonObj.get("method").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `method` to be a primitive type in the JSON string but got `%s`", jsonObj.get("method").toString()));
       }
+      // validate the optional field `method`
+      if (jsonObj.get("method") != null && !jsonObj.get("method").isJsonNull()) {
+        MethodEnum.validateJsonElement(jsonObj.get("method"));
+      }
       // validate the optional field `path`
       if (jsonObj.get("path") != null && !jsonObj.get("path").isJsonNull()) {
-        V1HTTPRouteSpecRulesInnerMatchesInnerPath.validateJsonObject(jsonObj.getAsJsonObject("path"));
+        V1HTTPRouteSpecRulesInnerMatchesInnerPath.validateJsonElement(jsonObj.get("path"));
       }
       if (jsonObj.get("queryParams") != null && !jsonObj.get("queryParams").isJsonNull()) {
         JsonArray jsonArrayqueryParams = jsonObj.getAsJsonArray("queryParams");
@@ -348,7 +349,7 @@ public class V1HTTPRouteSpecRulesInnerMatchesInner {
 
           // validate the optional field `queryParams` (array)
           for (int i = 0; i < jsonArrayqueryParams.size(); i++) {
-            V1HTTPRouteSpecRulesInnerMatchesInnerQueryParamsInner.validateJsonObject(jsonArrayqueryParams.get(i).getAsJsonObject());
+            V1HTTPRouteSpecRulesInnerMatchesInnerQueryParamsInner.validateJsonElement(jsonArrayqueryParams.get(i));
           };
         }
       }
@@ -374,9 +375,9 @@ public class V1HTTPRouteSpecRulesInnerMatchesInner {
 
            @Override
            public V1HTTPRouteSpecRulesInnerMatchesInner read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             JsonElement jsonElement = elementAdapter.read(in);
+             validateJsonElement(jsonElement);
+             return thisAdapter.fromJsonTree(jsonElement);
            }
 
        }.nullSafe();
