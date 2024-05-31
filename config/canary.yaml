@@ -19,13 +19,13 @@ spec:
       namespace: projectcontour
   analysis:
     interval: 10s
-    threshold: 6
+    threshold: 1
     maxWeight: 10
     stepWeight: 5
     metrics:
     - name: request-success-rate
       thresholdRange:
-        min: 90
+        min: 99
       interval: 1m
     - name: request-duration
       thresholdRange:

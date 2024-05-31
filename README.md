@@ -195,5 +195,23 @@ It's an infinite loop updating the gateway every 5 seconds. You can see the weig
 
 ```
 $ kubectl set image deployment/podinfo podinfod=ghcr.io/stefanprodan/podinfo:6.0.0
-$ ab -c 2 -n 30000 http://localhost:8080/app/podinfo
+$ ab -c 2 -n 30000 http://localhost:8080/podinfo/
 ```
+
+# Prometheus
+
+Flagger has its own Prometheus instance and you can see the canary metrics from there. You can port forward to the Prometheus instance:
+
+```
+$ kubectl port-forward -n flagger-system service/flagger-prometheus 9090:9090
+```
+
+and then query for `flagger_canary_metric_analysis`. If the canary has been active recently you should see some metrics:
+
+```
+flagger_canary_metric_analysis{app="flagger", ... metric="request-duration", name="podinfo", namespace="default", pod_template_hash="8597f89476"}
+0.004
+flagger_canary_metric_analysis{app="flagger", ... metric="request-success-rate", name="podinfo", namespace="default", pod_template_hash="8597f89476"} 100
+```
+
+The request success rate is 100% so the canary succeeded. If you want to see the canary failing you can send some requests to `localhost:8080/canary/status/500`, but be careful because it's quite hard to succeed once you have failed with only 2 image labels (flagger refuses to install a canary if it failed once already).
