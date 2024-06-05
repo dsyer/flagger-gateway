@@ -12,8 +12,8 @@
 	<groupId>com.example</groupId>
 	<artifactId>gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-openapi-aggregator</name>
-	<description>OpenAPI aggregator for Spring Boot</description>
+	<name>flagger-gateway</name>
+	<description>Flagger gateway for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
